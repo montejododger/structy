@@ -59,6 +59,9 @@ compress('yyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyyy
 */
 
 /*  GAME PLAN
+
+    2 pointers!
+
     create a new arr
     create two pointers
     while loop to iterate thru (s)
@@ -111,16 +114,34 @@ anagrams('pp', 'oo') // -> false
 
 */
 
-
 /* GAME PLAN
 
+    compare lengths and return out if not equal
+    create 2 object of the 2 strings
+    check if the 2 objects are the same or different
 
 */
 
-
 let anagrams = (s1, s2) => {
+    if (s1.length !== s2.length) return false;
 
-}
+    const str1 = {};
+    const str2 = {};
 
+    for (const char of s1) {
+        str1[char] = (str1[char] || 0) + 1;
+    }
+
+    for (const char of s2) {
+        str2[char] = (str2[char] || 0) + 1;
+    }
+
+    for (const key in str1) {
+        if (!str2[key]) return false;
+        if (str1[key] !== str2[key]) return false;
+    }
+
+    return true;
+};
 
 // ############################################################################################################################################

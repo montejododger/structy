@@ -122,7 +122,7 @@ anagrams('pp', 'oo') // -> false
 
 */
 
-let anagrams = (s1, s2) => {
+const anagrams = (s1, s2) => {
     if (s1.length !== s2.length) return false;
 
     const str1 = {};
@@ -156,7 +156,6 @@ mostFrequentChar('potato'); // -> 'o'
 mostFrequentChar('eleventennine'); // -> 'e'
 mostFrequentChar("riverbed"); // -> 'r'
 
-
 */
 
 /*  GAME PLAN
@@ -164,10 +163,9 @@ mostFrequentChar("riverbed"); // -> 'r'
 break the word down into an object
 compare each objects value to another and return the one with the most
 
-
 */
 
-let mostFrequentChar = (s) => {
+const mostFrequentChar = (s) => {
     const charCount = {};
     let letter = "";
     let count = 0;
@@ -186,6 +184,45 @@ let mostFrequentChar = (s) => {
     }
 
     return letter;
+};
+
+// ############################################################################################################################################
+
+/* TESTS
+
+pairSum([3, 2, 5, 4, 1], 8); // -> [0, 2]
+pairSum([4, 7, 9, 2, 5, 1], 5); // -> [0, 5]
+pairSum([4, 7, 9, 2, 5, 1], 3); // -> [3, 5]
+pairSum([1, 6, 7, 2], 13); // -> [1, 2]
+pairSum([9, 9], 18); // -> [0, 1]
+pairSum([6, 4, 2, 8 ], 12); // -> [1, 3]
+
+
+*/
+
+/*  GAME PLAN
+
+    iterarte thru numbers array
+    grab the number and find the compliment number that would make the target sum
+
+    check is compliment number is in object and if so return that and i
+
+    else
+
+    add the number to the object with the value as the index
+*/
+
+const pairSum = (numbers, targetSum) => {
+    const indicies = {};
+
+    for (let i = 0; i < numbers.length; i++) {
+        const num = numbers[i];
+        const compliment = targetSum - num;
+
+        if (compliment in indicies) return [indicies[compliment], i];
+
+        indicies[num] = i;
+    }
 };
 
 // ############################################################################################################################################

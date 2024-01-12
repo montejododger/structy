@@ -145,3 +145,47 @@ let anagrams = (s1, s2) => {
 };
 
 // ############################################################################################################################################
+
+/*  TESTS
+
+mostFrequentChar('bookeeper'); // -> 'e'
+mostFrequentChar('david'); // -> 'd'
+mostFrequentChar('abby'); // -> 'b'
+mostFrequentChar('mississippi'); // -> 'i'
+mostFrequentChar('potato'); // -> 'o'
+mostFrequentChar('eleventennine'); // -> 'e'
+mostFrequentChar("riverbed"); // -> 'r'
+
+
+*/
+
+/*  GAME PLAN
+
+break the word down into an object
+compare each objects value to another and return the one with the most
+
+
+*/
+
+let mostFrequentChar = (s) => {
+    const charCount = {};
+    let letter = "";
+    let count = 0;
+
+    for (const char of s) {
+        charCount[char] = (charCount[char] || 0) + 1;
+    }
+
+    // console.log(charCount);
+
+    for (const key in charCount) {
+        if (charCount[key] > count) {
+            count = charCount[key];
+            letter = key;
+        }
+    }
+
+    return letter;
+};
+
+// ############################################################################################################################################

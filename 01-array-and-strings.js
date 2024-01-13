@@ -226,3 +226,94 @@ const pairSum = (numbers, targetSum) => {
 };
 
 // ############################################################################################################################################
+
+/*  TESTS
+
+pairProduct([3, 2, 5, 4, 1], 8); // -> [1, 3]
+pairProduct([3, 2, 5, 4, 1], 10); // -> [1, 2]
+pairProduct([4, 7, 9, 2, 5, 1], 5); // -> [4, 5]
+pairProduct([4, 7, 9, 2, 5, 1], 35); // -> [1, 4]
+pairProduct([3, 2, 5, 4, 1], 10); // -> [1, 2]
+pairProduct([4, 6, 8, 2], 16); // -> [2, 3]
+
+*/
+
+/* GAME PLAN
+
+    iterate thru the numbers
+    find the number that would compliment current num
+    return them if they equal target
+    add to object if not
+
+*/
+
+let pairProduct = (numbers, targetProduct) => {
+    const prevNums = {};
+
+    for (let i = 0; i < numbers.length; i++) {
+        const num = numbers[i];
+        const complement = targetProduct / num;
+
+        if (complement in prevNums) return [prevNums[complement], i];
+
+        comps[num] = i;
+    }
+};
+
+// ############################################################################################################################################
+
+/* TESTS
+
+intersection([4,2,1,6], [3,6,9,2,10]) // -> [2,6]
+intersection([2,4,6], [4,2]) // -> [2,4]
+intersection([4,2,1], [1,2,4,6]) // -> [1,2,4]
+intersection([0,1,2], [10,11]) // -> []
+
+const a = [];
+const b = [];
+for (let i = 0; i < 50000; i += 1) {
+    a.push(i);
+    b.push(i);
+}
+intersection(a, b) // -> [0,1,2,3,..., 49999]
+;;;/;;
+*/
+
+/* GAME PLAN
+
+    create a new arr
+
+    create a set out of one of the arguments
+    iterate thru the other argument
+    if item is in set then add to new arr
+    return new arr
+
+*/
+
+const intersection = (a, b) => {
+    let results = [];
+
+    const setA = new Set(a);
+
+    for (const item of b) {
+        if (setA.has(item)) results.push(item);
+    }
+
+    return results;
+};
+
+// ############################################################################################################################################
+
+/* TESTS
+
+
+
+*/
+
+/* GAME PLAN
+
+
+
+*/
+
+// ############################################################################################################################################

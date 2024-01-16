@@ -96,11 +96,93 @@ const sumList = (head) => {
 
 /* TESTS
 
+const a = new Node("a");
+const b = new Node("b");
+const c = new Node("c");
+const d = new Node("d");
+
+a.next = b;
+b.next = c;
+c.next = d;
+
+// a -> b -> c -> d
+
+linkedListFind(a, "c"); // true
+
+const a = new Node("a");
+const b = new Node("b");
+const c = new Node("c");
+const d = new Node("d");
+
+a.next = b;
+b.next = c;
+c.next = d;
+
+// a -> b -> c -> d
+
+linkedListFind(a, "d"); // true
+
+const a = new Node("a");
+const b = new Node("b");
+const c = new Node("c");
+const d = new Node("d");
+
+a.next = b;
+b.next = c;
+c.next = d;
+
+// a -> b -> c -> d
+
+linkedListFind(a, "q"); // false
+
+const node1 = new Node("jason");
+const node2 = new Node("leneli");
+
+node1.next = node2;
+
+// jason -> leneli
+
+linkedListFind(node1, "jason"); // true
+
+const node1 = new Node(42);
+
+// 42
+
+linkedListFind(node1, 42); // true
+
+const node1 = new Node(42);
+
+// 42
+
+linkedListFind(node1, 100); // false
+
+
 */
 
 /*  GAME PLAN
 
+    create current
+    while loop till null
+    check the value to the target
+    if a match , return true
+
+    no matches at all return false
+
+
 */
+
+const linkedListFind = (head, target) => {
+    let current = head;
+
+    while (current !== null) {
+        console.log(current.val);
+        if (current.val === target) return true;
+
+        current = current.next;
+    }
+
+    return false;
+};
 
 // ############################################################################################################################################
 

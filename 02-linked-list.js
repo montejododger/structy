@@ -78,6 +78,14 @@ sumList(null); // 0
 
 /*  GAME PLAN
 
+    create a sum variable
+    create a current
+    while loop till null
+    add current value to sum
+    move current to next
+
+    return sum
+
 */
 
 const sumList = (head) => {
@@ -165,6 +173,7 @@ linkedListFind(node1, 100); // false
     while loop till null
     check the value to the target
     if a match , return true
+    move current to next
 
     no matches at all return false
 
@@ -188,11 +197,153 @@ const linkedListFind = (head, target) => {
 
 /* TESTS
 
+const a = new Node("a");
+const b = new Node("b");
+const c = new Node("c");
+const d = new Node("d");
+
+a.next = b;
+b.next = c;
+c.next = d;
+
+// a -> b -> c -> d
+
+getNodeValue(a, 2); // 'c'
+
+const a = new Node("a");
+const b = new Node("b");
+const c = new Node("c");
+const d = new Node("d");
+
+a.next = b;
+b.next = c;
+c.next = d;
+
+// a -> b -> c -> d
+
+getNodeValue(a, 3); // 'd'
+
+const a = new Node("a");
+const b = new Node("b");
+const c = new Node("c");
+const d = new Node("d");
+
+a.next = b;
+b.next = c;
+c.next = d;
+
+// a -> b -> c -> d
+
+getNodeValue(a, 7); // null
+
+const node1 = new Node("banana");
+const node2 = new Node("mango");
+
+node1.next = node2;
+
+// banana -> mango
+
+getNodeValue(node1, 0); // 'banana'
+
+const node1 = new Node("banana");
+const node2 = new Node("mango");
+
+node1.next = node2;
+
+// banana -> mango
+
+getNodeValue(node1, 1); // 'mango'
+
 */
 
 /*  GAME PLAN
 
+    create a count variable
+    create a current
+    whle loop till null
+    check if count equals index // return current val if so
+    move current to next node
+    increment count
+
+    return null if not found
+
 */
+
+const getNodeValue = (head, index) => {
+    let count = 0;
+    let current = head;
+
+    while (current !== null) {
+        if (count === index) return current.val;
+        current = current.next;
+        count++;
+    }
+
+    return null
+};
+
+// ############################################################################################################################################
+
+/* TESTS
+
+const a = new Node("a");
+const b = new Node("b");
+const c = new Node("c");
+const d = new Node("d");
+const e = new Node("e");
+const f = new Node("f");
+
+a.next = b;
+b.next = c;
+c.next = d;
+d.next = e;
+e.next = f;
+
+// a -> b -> c -> d -> e -> f
+
+reverseList(a); // f -> e -> d -> c -> b -> a
+
+const x = new Node("x");
+const y = new Node("y");
+
+x.next = y;
+
+// x -> y
+
+reverseList(x); // y -> x
+
+const p = new Node("p");
+
+// p
+
+reverseList(p); // p
+*/
+
+/*  GAME PLAN
+    create a null node
+    move the null nodes next to current until the end
+
+
+*/
+
+//  N   ->  a   ->    b   ->   c   ->   d
+//  prev    curr      next
+
+const reverseList = (head) => {
+
+    let prev = null;
+    let current = head;
+
+    while (current !== null) {
+        const next = current.next; // so we dont lose the pointer to the next node
+
+        current.next = prev;
+        prev = current
+        current = next;
+    }
+
+    return prev;
+}
 
 // ############################################################################################################################################
 
@@ -214,15 +365,11 @@ const linkedListFind = (head, target) => {
 
 */
 
-// ############################################################################################################################################
 
-/* TESTS
+//  N   ->  a   ->    b   ->   c   ->   d
+//  prev    curr      next
 
-*/
 
-/*  GAME PLAN
-
-*/
 
 // ############################################################################################################################################
 
@@ -233,6 +380,10 @@ const linkedListFind = (head, target) => {
 /*  GAME PLAN
 
 */
+
+
+//  N   ->  a   ->    b   ->   c   ->   d
+//  prev    curr      next
 
 // ############################################################################################################################################
 

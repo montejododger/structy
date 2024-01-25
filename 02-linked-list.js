@@ -782,6 +782,42 @@ const longestStreak = (head) => {
 
 */
 
+/*
+
+    current var
+
+    while loop(till curr is null)
+    check if current val equals target val
+    reroute prev.next ot current.next
+    break
+
+    move prev to current
+    move current to current.next node
+
+
+
+    return head
+*/
+
+const removeNode = (head, targetVal) => {
+
+    if (head.val === targetVal) return head.next
+
+    let prev = null
+    let current = head;
+
+    while (current !== null) {
+        if (current.val === targetVal) {
+            prev.next = current.next
+            break
+        }
+        prev = current;
+        current = current.next
+    }
+
+    return head;
+};
+
 // ############################################################################################################################################
 
 /* TESTS

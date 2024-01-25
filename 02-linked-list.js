@@ -701,7 +701,15 @@ const isUnivalueList = (head) => {
 
 // RECURSIVELY
 
-const isUnivalueList = (head) => {};
+const isUnivalueList = (head, prevVal = null) => {
+    if (head === null) return true;
+
+    if (prevVal == null || prevVal === head.val) {
+        return isUnivalueList(head.next, head.val);
+    } else {
+        return false;
+    }
+};
 
 //  N   ->  a   ->    b   ->   c   ->   d
 //  prev    curr      next
@@ -715,6 +723,54 @@ const isUnivalueList = (head) => {};
 /*  GAME PLAN
 
 */
+
+/*
+
+    cover edgecase if head is falsey, return 0;
+
+    current streak variable
+    longest streak variable
+
+    current node
+    next node
+
+    while loop (till next === null)
+
+    check if current and next are same value
+    increment
+    else
+    set longest to current or higher
+    reset current
+
+    move current and next to the next node
+
+    return longest streak
+
+*/
+
+const longestStreak = (head) => {
+    if (!head) return 0;
+
+    let currentStreak = 1;
+    let longestStreak = 1;
+
+    let current = head;
+    let nextNode = head.next;
+
+    while (nextNode !== null) {
+        if (current.val === nextNode.val) {
+            currentStreak++;
+        } else {
+            longestStreak = Math.max(longestStreak, currentStreak);
+            currentStreak = 1;
+        }
+        current = nextNode;
+        nextNode = nextNode.next;
+    }
+    longestStreak = Math.max(longestStreak, currentStreak);
+
+    return longestStreak;
+};
 
 // ############################################################################################################################################
 

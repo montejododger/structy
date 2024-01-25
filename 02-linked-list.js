@@ -718,13 +718,80 @@ const isUnivalueList = (head, prevVal = null) => {
 
 /* TESTS
 
+const a = new Node(5);
+const b = new Node(5);
+const c = new Node(7);
+const d = new Node(7);
+const e = new Node(7);
+const f = new Node(6);
+
+a.next = b;
+b.next = c;
+c.next = d;
+d.next = e;
+e.next = f;
+
+// 5 -> 5 -> 7 -> 7 -> 7 -> 6
+
+longestStreak(a); // 3
+
+
+const a = new Node(3);
+const b = new Node(3);
+const c = new Node(3);
+const d = new Node(3);
+const e = new Node(9);
+const f = new Node(9);
+
+a.next = b;
+b.next = c;
+c.next = d;
+d.next = e;
+e.next = f;
+
+// 3 -> 3 -> 3 -> 3 -> 9 -> 9
+
+longestStreak(a); // 4
+
+const a = new Node(9);
+const b = new Node(9);
+const c = new Node(1);
+const d = new Node(9);
+const e = new Node(9);
+const f = new Node(9);
+
+a.next = b;
+b.next = c;
+c.next = d;
+d.next = e;
+e.next = f;
+
+// 9 -> 9 -> 1 -> 9 -> 9 -> 9
+
+longestStreak(a); // 3
+
+const a = new Node(5);
+const b = new Node(5);
+
+a.next = b;
+
+// 5 -> 5
+
+longestStreak(a); // 2
+
+const a = new Node(4);
+
+// 4
+
+longestStreak(a); // 1
+
+longestStreak(null); // 0
+
+
+
 */
 
 /*  GAME PLAN
-
-*/
-
-/*
 
     cover edgecase if head is falsey, return 0;
 
@@ -776,13 +843,75 @@ const longestStreak = (head) => {
 
 /* TESTS
 
+const a = new Node("a");
+const b = new Node("b");
+const c = new Node("c");
+const d = new Node("d");
+const e = new Node("e");
+const f = new Node("f");
+
+a.next = b;
+b.next = c;
+c.next = d;
+d.next = e;
+e.next = f;
+
+// a -> b -> c -> d -> e -> f
+
+removeNode(a, "c");
+// a -> b -> d -> e -> f
+
+const x = new Node("x");
+const y = new Node("y");
+const z = new Node("z");
+
+x.next = y;
+y.next = z;
+
+// x -> y -> z
+
+removeNode(x, "z");
+// x -> y
+
+
+const q = new Node("q");
+const r = new Node("r");
+const s = new Node("s");
+
+q.next = r;
+r.next = s;
+
+// q -> r -> s
+
+removeNode(q, "q");
+// r -> s
+
+const node1 = new Node("h");
+const node2 = new Node("i");
+const node3 = new Node("j");
+const node4 = new Node("i");
+
+node1.next = node2;
+node2.next = node3;
+node3.next = node4;
+
+// h -> i -> j -> i
+
+removeNode(node1, "i");
+// h -> j -> i
+
+const t = new Node("t");
+
+// t
+
+removeNode(t, "t");
+// null
+
+
+
 */
 
 /*  GAME PLAN
-
-*/
-
-/*
 
     current var
 
@@ -800,19 +929,18 @@ const longestStreak = (head) => {
 */
 
 const removeNode = (head, targetVal) => {
+    if (head.val === targetVal) return head.next;
 
-    if (head.val === targetVal) return head.next
-
-    let prev = null
+    let prev = null;
     let current = head;
 
     while (current !== null) {
         if (current.val === targetVal) {
-            prev.next = current.next
-            break
+            prev.next = current.next;
+            break;
         }
         prev = current;
-        current = current.next
+        current = current.next;
     }
 
     return head;
@@ -822,11 +950,104 @@ const removeNode = (head, targetVal) => {
 
 /* TESTS
 
+const a = new Node("a");
+const b = new Node("b");
+const c = new Node("c");
+const d = new Node("d");
+
+a.next = b;
+b.next = c;
+c.next = d;
+
+// a -> b -> c -> d
+
+insertNode(a, 'x', 2);
+// a -> b -> x -> c -> d
+
+const a = new Node("a");
+const b = new Node("b");
+const c = new Node("c");
+const d = new Node("d");
+
+a.next = b;
+b.next = c;
+c.next = d;
+
+// a -> b -> c -> d
+
+insertNode(a, 'v', 3);
+// a -> b -> c -> v -> d
+
+const a = new Node("a");
+const b = new Node("b");
+const c = new Node("c");
+const d = new Node("d");
+
+a.next = b;
+b.next = c;
+c.next = d;
+
+// a -> b -> c -> d
+
+insertNode(a, 'm', 4);
+// a -> b -> c -> d -> m
+
+const a = new Node("a");
+const b = new Node("b");
+
+a.next = b;
+
+// a -> b
+
+insertNode(a, 'z', 0);
+// z -> a -> b
+
+
 */
 
 /*  GAME PLAN
 
+    consider edge case of index being 0
+
+    if index is 0, create a new head and point next to old head
+
+
+    current and current index variable
+    while loop (till null)
+        if place === index -1
+        save current next
+        change current next to new next
+        change the next next to the old next
+
+    increment current index
+    move current point forward
+
+    
+
 */
+
+const insertNode = (head, value, index) => {
+    if (index === 0) {
+        const newHead = new Node(value);
+        newHead.next = head;
+        return newHead;
+    }
+
+    let current = head
+    let place = 0;
+
+    while (current !== null) {
+        if (place === index - 1) {
+            const next = current.next;
+            current.next = new Node(value)
+            current.next.next = next
+        }
+        place++;
+        current = current.next
+    }
+
+    return head;
+};
 
 // ############################################################################################################################################
 

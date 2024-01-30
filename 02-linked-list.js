@@ -1022,7 +1022,7 @@ insertNode(a, 'z', 0);
     increment current index
     move current point forward
 
-    
+
 
 */
 
@@ -1033,17 +1033,17 @@ const insertNode = (head, value, index) => {
         return newHead;
     }
 
-    let current = head
+    let current = head;
     let place = 0;
 
     while (current !== null) {
         if (place === index - 1) {
             const next = current.next;
-            current.next = new Node(value)
-            current.next.next = next
+            current.next = new Node(value);
+            current.next.next = next;
         }
         place++;
-        current = current.next
+        current = current.next;
     }
 
     return head;
@@ -1052,21 +1052,168 @@ const insertNode = (head, value, index) => {
 // ############################################################################################################################################
 
 /* TESTS
+createLinkedList(["h", "e", "y"]);
+// h -> e -> y
 
+createLinkedList([1, 7, 1, 8]);
+// 1 -> 7 -> 1 -> 8
+
+createLinkedList(["a"]);
+// a
+
+createLinkedList([]);
+// null
 */
 
 /*  GAME PLAN
 
 */
 
+const createLinkedList = (values) => {
+    let dummyhead = new Node(null);
+    let tail = dummyhead;
+
+    for (let i = 0; i < values.length; i++) {
+        tail.next = new Node(values[i]);
+        tail = tail.next;
+    }
+
+    return dummyhead.next;
+};
 // ############################################################################################################################################
 
 /* TESTS
+//   621
+// + 354
+// -----
+//   975
 
+const a1 = new Node(1);
+const a2 = new Node(2);
+const a3 = new Node(6);
+a1.next = a2;
+a2.next = a3;
+// 1 -> 2 -> 6
+
+const b1 = new Node(4);
+const b2 = new Node(5);
+const b3 = new Node(3);
+b1.next = b2;
+b2.next = b3;
+// 4 -> 5 -> 3
+
+addLists(a1, b1);
+// 5 -> 7 -> 9
+
+//  7541
+// +  32
+// -----
+//  7573
+
+const a1 = new Node(1);
+const a2 = new Node(4);
+const a3 = new Node(5);
+const a4 = new Node(7);
+a1.next = a2;
+a2.next = a3;
+a3.next = a4;
+// 1 -> 4 -> 5 -> 7
+
+const b1 = new Node(2);
+const b2 = new Node(3);
+b1.next = b2;
+// 2 -> 3
+
+addLists(a1, b1);
+// 3 -> 7 -> 5 -> 7
+
+//   39
+// + 47
+// ----
+//   86
+
+const a1 = new Node(9);
+const a2 = new Node(3);
+a1.next = a2;
+// 9 -> 3
+
+const b1 = new Node(7);
+const b2 = new Node(4);
+b1.next = b2;
+// 7 -> 4
+
+addLists(a1, b1);
+// 6 -> 8
+
+//   89
+// + 47
+// ----
+//  136
+
+const a1 = new Node(9);
+const a2 = new Node(8);
+a1.next = a2;
+// 9 -> 8
+
+const b1 = new Node(7);
+const b2 = new Node(4);
+b1.next = b2;
+// 7 -> 4
+
+addLists(a1, b1);
+// 6 -> 3 -> 1
+
+//   999
+//  +  6
+//  ----
+//  1005
+
+const a1 = new Node(9);
+const a2 = new Node(9);
+const a3 = new Node(9);
+a1.next = a2;
+a2.next = a3;
+// 9 -> 9 -> 9
+
+const b1 = new Node(6);
+// 6
+
+addLists(a1, b1);
+// 5 -> 0 -> 0 -> 1
 */
 
 /*  GAME PLAN
 
 */
+
+const addLists = (head1, head2) => {asdflkjh
+
+    const dummyHead = new Node(null);
+    let tail = dummyHead;
+    let carry = 0;
+
+    let curr1 = head1;
+    let curr2 = head2;
+
+    while (curr1 !== null || curr2 !== null || carry === 1) {
+        const val1 = curr1 === null ? 0 : curr1.val;
+        const val2 = curr2 === null ? 0 : curr2.val;
+        const sum = val1 + val2 + carry;
+        carry = sum > 9 ? 1 : 0;
+
+        const digit = sum % 10;
+
+        if (curr1 !== null) curr1 = curr1.next
+        if (curr2 !== null) curr2 = curr2.next
+
+        tail.next = new Node(digit);
+        tail = tail.next;
+    }
+
+    return dummyHead.next;
+};
+
+// Recursive
+
 
 // ############################################################################################################################################

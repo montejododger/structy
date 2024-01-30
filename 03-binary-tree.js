@@ -73,6 +73,48 @@ let depthFirstValues = (root) => {
 /*  GAME PLAN
 
 */
+
+// ITERATIVE
+const breadthFirstValues = (root) => {
+    const values = [];
+    const queue = [root];
+
+    while (queue.length > 0) {
+        const node = queue.shift();
+        values.push(node.val);
+
+        if (node.left) queue.push(node.left)
+        if (node.right) queue.push(node.right)
+
+    }
+
+    return values;
+};
+/*
+
+     a
+   /   \
+  b     c
+ / \     \
+d   e     f
+
+
+            [a] -> [b, c] -> [c, d, e] -> [d, e] -> [e] -> [f]
+
+            a -> b -> c -> d -> e -> f
+
+*/
+
+//    -> ['a', 'b', 'c', 'd', 'e', 'f']
+
+// RECURSIVELY
+
+const breadthFirstValues = (root) => {
+    if (!root) return [];
+    
+
+    return [root.val,]
+}
 // ############################################################################################################################################
 
 /* TESTS

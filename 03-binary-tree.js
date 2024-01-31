@@ -83,9 +83,8 @@ const breadthFirstValues = (root) => {
         const node = queue.shift();
         values.push(node.val);
 
-        if (node.left) queue.push(node.left)
-        if (node.right) queue.push(node.right)
-
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
     }
 
     return values;
@@ -109,12 +108,6 @@ d   e     f
 
 // RECURSIVELY
 
-const breadthFirstValues = (root) => {
-    if (!root) return [];
-    
-
-    return [root.val,]
-}
 // ############################################################################################################################################
 
 /* TESTS
@@ -124,6 +117,35 @@ const breadthFirstValues = (root) => {
 /*  GAME PLAN
 
 */
+
+// iterive
+
+const treeSum = (root) => {
+    if (!root) return 0;
+
+    let sum = 0;
+    const queue = [root];
+
+    while (queue.length > 0) {
+        const node = queue.shift();
+        const val = node.val;
+
+        sum += val;
+
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
+    }
+
+    return sum;
+};
+
+// recursive
+
+const treeSum = (root) => {
+    if (!root) return 0;
+
+    return root.val + treeSum(root.left) + treeSum(root.right)
+}
 // ############################################################################################################################################
 
 /* TESTS

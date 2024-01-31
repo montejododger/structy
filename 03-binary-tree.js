@@ -144,8 +144,8 @@ const treeSum = (root) => {
 const treeSum = (root) => {
     if (!root) return 0;
 
-    return root.val + treeSum(root.left) + treeSum(root.right)
-}
+    return root.val + treeSum(root.left) + treeSum(root.right);
+};
 // ############################################################################################################################################
 
 /* TESTS
@@ -155,6 +155,29 @@ const treeSum = (root) => {
 /*  GAME PLAN
 
 */
+
+const treeIncludes = (root, target) => {
+    if (!root) return false;
+
+    const queue = [root];
+
+    while (queue.length > 0) {
+        const current = queue.shift();
+        if (current.val === target) return true;
+
+        if (current.left) queue.push(current.left);
+        if (current.right) queue.push(current.right);
+    }
+
+    return false;
+};
+
+const treeIncludes = (root, target) => {
+    if (!root) return false;
+    if (root.val === target) return true
+
+    return treeIncludes(root.left, target) || treeIncludes(root.right, target)
+};
 // ############################################################################################################################################
 
 /* TESTS

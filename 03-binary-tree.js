@@ -186,7 +186,49 @@ const treeIncludes = (root, target) => {
 
 /*  GAME PLAN
 
+Initialize a queue with root
+set min variable to the root.val
+
+while queue is not empty
+    remove first node from queue and call it current
+    update min to be the smaller of min and the val of current
+    if current has left child add to queue
+    if current has right child add to queue
+
+After loop return min
+
+
+while loop
 */
+
+const treeMinValue = (root) => {
+    const queue = [root]
+    let min = root.val
+
+    while (queue.length > 0) {
+        const current = queue.shift()
+        min = current.val < min ? current.val : min
+
+        if (current.left) queue.push(current.left)
+        if (current.right) queue.push(current.right)
+    }
+
+    return min
+}
+
+
+// recursive
+
+const treeMinValue = (root) => {
+    if (!root) return null
+
+    let min = root.val
+
+    const leftMin = treeMinValue(root.left)
+    const rightMin = treeMinValue(root.right)
+
+    return Math.min(min, leftMin, rightMin)
+}
 // ############################################################################################################################################
 
 /* TESTS

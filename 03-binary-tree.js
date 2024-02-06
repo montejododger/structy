@@ -174,9 +174,9 @@ const treeIncludes = (root, target) => {
 
 const treeIncludes = (root, target) => {
     if (!root) return false;
-    if (root.val === target) return true
+    if (root.val === target) return true;
 
-    return treeIncludes(root.left, target) || treeIncludes(root.right, target)
+    return treeIncludes(root.left, target) || treeIncludes(root.right, target);
 };
 // ############################################################################################################################################
 
@@ -202,33 +202,32 @@ while loop
 */
 
 const treeMinValue = (root) => {
-    const queue = [root]
-    let min = root.val
+    const queue = [root];
+    let min = root.val;
 
     while (queue.length > 0) {
-        const current = queue.shift()
-        min = current.val < min ? current.val : min
+        const current = queue.shift();
+        min = current.val < min ? current.val : min;
 
-        if (current.left) queue.push(current.left)
-        if (current.right) queue.push(current.right)
+        if (current.left) queue.push(current.left);
+        if (current.right) queue.push(current.right);
     }
 
-    return min
-}
-
+    return min;
+};
 
 // recursive
 
 const treeMinValue = (root) => {
-    if (!root) return null
+    if (!root) return null;
 
-    let min = root.val
+    let min = root.val;
 
-    const leftMin = treeMinValue(root.left)
-    const rightMin = treeMinValue(root.right)
+    const leftMin = treeMinValue(root.left);
+    const rightMin = treeMinValue(root.right);
 
-    return Math.min(min, leftMin, rightMin)
-}
+    return Math.min(min, leftMin, rightMin);
+};
 // ############################################################################################################################################
 
 /* TESTS
@@ -237,7 +236,16 @@ const treeMinValue = (root) => {
 
 /*  GAME PLAN
 
+base case
+    return root.val
 */
+
+const maxPathSum = (root) => {
+    if (!root) return -Infinity;
+    if (!root.left && !root.right) return root.val;
+
+    return root.val + Math.max(maxPathSum(root.left), maxPathSum(root.right));
+};
 // ############################################################################################################################################
 
 /* TESTS
@@ -246,7 +254,44 @@ const treeMinValue = (root) => {
 
 /*  GAME PLAN
 
+    2 Base Cases
+    If no more leafs or if oot equals target
+
+    recursively go thru the left and right
+    check left and right if they dont equal null
+    return left or right with - unshift root.val
+
+
+    lastly return null if nothing found
+    
 */
+
+// const pathFinder = (root, target) => {
+//     const result = pathFinderHelper(root, target);
+
+//     if (!result) return null;
+//     if (result) return result.reverse();
+// };
+
+const pathFinderHelper = (root, target) => {
+    if (!root) return null;
+    if (root.val === target) return [root.val];
+
+    const left = pathFinder(root.left, target);
+    const right = pathFinder(root.right, target);
+
+    if (left) {
+        left.unshift(root.val);
+        return left;
+    }
+
+    if (right) {
+        right.unshift(root.val);
+        return right;
+    }
+
+    return null;
+};
 // ############################################################################################################################################
 
 /* TESTS

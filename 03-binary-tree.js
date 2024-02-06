@@ -263,7 +263,7 @@ const maxPathSum = (root) => {
 
 
     lastly return null if nothing found
-    
+
 */
 
 // const pathFinder = (root, target) => {
@@ -273,7 +273,7 @@ const maxPathSum = (root) => {
 //     if (result) return result.reverse();
 // };
 
-const pathFinderHelper = (root, target) => {
+const pathFinder = (root, target) => {
     if (!root) return null;
     if (root.val === target) return [root.val];
 
@@ -301,6 +301,15 @@ const pathFinderHelper = (root, target) => {
 /*  GAME PLAN
 
 */
+
+const treeValueCount = (root, target) => {
+    if (!root) return 0;
+
+    const match = root.val === target ? 1 : 0;
+
+    return match +  treeValueCount(root.left, target) + treeValueCount(root.right, target)
+
+}
 // ############################################################################################################################################
 
 /* TESTS

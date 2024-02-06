@@ -307,9 +307,12 @@ const treeValueCount = (root, target) => {
 
     const match = root.val === target ? 1 : 0;
 
-    return match +  treeValueCount(root.left, target) + treeValueCount(root.right, target)
-
-}
+    return (
+        match +
+        treeValueCount(root.left, target) +
+        treeValueCount(root.right, target)
+    );
+};
 // ############################################################################################################################################
 
 /* TESTS
@@ -319,6 +322,15 @@ const treeValueCount = (root, target) => {
 /*  GAME PLAN
 
 */
+
+const howHigh = (node) => {
+    if (!node) return -1;
+
+    const left = howHigh(node.left);
+    const right = howHigh(node.right);
+
+    return 1 + Math.max(left, right);
+};
 // ############################################################################################################################################
 
 /* TESTS

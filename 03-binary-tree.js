@@ -339,4 +339,66 @@ const howHigh = (node) => {
 
 /*  GAME PLAN
 
+    Breadth First
+    store all values
+
+    start the queue with root
+
+    while loop
+        shift the first element and add to values
+        add left and right to queue
+        
+    return the last value
+*/
+
+
+const bottomRightValue = (root) => {
+    const values = [];
+    const queue = [root];
+
+    while (queue.length > 0) {
+        const node = queue.shift();
+        values.push(node.val);
+
+        if (node.left) queue.push(node.left);
+        if (node.right) queue.push(node.right);
+    }
+
+    return values.pop();
+};
+// ############################################################################################################################################
+
+/* TESTS
+
+*/
+
+/*  GAME PLAN
+
+*/
+// ############################################################################################################################################
+
+/* TESTS
+
+*/
+
+/*  GAME PLAN
+
+*/
+// ############################################################################################################################################
+
+/* TESTS
+
+*/
+
+/*  GAME PLAN
+
+*/
+// ############################################################################################################################################
+
+/* TESTS
+
+*/
+
+/*  GAME PLAN
+
 */

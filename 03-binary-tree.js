@@ -347,10 +347,9 @@ const howHigh = (node) => {
     while loop
         shift the first element and add to values
         add left and right to queue
-        
+
     return the last value
 */
-
 
 const bottomRightValue = (root) => {
     const values = [];
@@ -375,6 +374,24 @@ const bottomRightValue = (root) => {
 /*  GAME PLAN
 
 */
+
+const allTreePaths = (root) => {
+    if (!root) return [];
+    if (!root.left && !root.right) return [[root.val]];
+
+    const paths = [];
+
+    const left = allTreePaths(root.left);
+    for (let path in left) {
+        paths.push(root.val, ...path);
+    }
+    const right = allTreePaths(root.right);
+    for (const path in right) {
+        paths.push(root.val, ...path);
+    }
+
+    return paths
+};
 // ############################################################################################################################################
 
 /* TESTS

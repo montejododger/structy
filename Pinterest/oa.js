@@ -234,6 +234,9 @@ function merge(intervals) {
     return merged;
   }
 
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+// Q2
 
 
   function calculateTotalDifferenceAndRotate(nums1, nums2) {
@@ -253,8 +256,80 @@ function merge(intervals) {
     }
 
     return results;
+
+
+    /////////////////////////////////////////////////////////////////////////
+//  Q3
+
+function isValidWord(matrix, word) {
+    const rows = matrix.length;
+    const cols = matrix[0].length;
+
+    // Helper function to check if the next position is valid
+    function isValid(x, y) {
+        return x >= 0 && x < rows && y >= 0 && y < cols;
+    }
+
+    // DFS search that tracks direction and checks for direction change
+    function search(x, y, index, prevDirection, directionChanged) {
+        if (index === word.length) return directionChanged; // Found valid word with direction change
+        if (!isValid(x, y) || matrix[x][y] !== word[index]) return false;
+
+        // Directions: Right (0, 1), Down (1, 0)
+        const directions = [[0, 1], [1, 0]];
+        for (let [dx, dy] of directions) {
+            const newX = x + dx;
+            const newY = y + dy;
+            const newDirection = dx === 0 ? 'H' : 'V'; // Horizontal or Vertical
+            const hasDirectionChanged = prevDirection && prevDirection !== newDirection ? true : directionChanged;
+
+            if (search(newX, newY, index + 1, newDirection, hasDirectionChanged)) {
+                return true;
+            }
+        }
+
+        return false;
+    }
+
+    // Iterate through each cell in the matrix as a potential starting point
+    for (let i = 0; i < rows; i++) {
+        for (let j = 0; j < cols; j++) {
+            if (matrix[i][j] === word[0]) { // Word start match
+                if (search(i, j, 0, null, false)) {
+                    return true; // Found valid path for this word
+                }
+            }
+        }
+    }
+
+    return false;
 }
 
+function countValidWords(matrix, words) {
+    let count = 0;
+    for (let word of words) {
+        if (isValidWord(matrix, word)) {
+            count++;
+        }
+    }
+    return count;
+}
+
+// Example usage
+const matrix = [
+    ["a", "c", "d"],
+    ["s", "a", "b"],
+    ["h", "t", "s"]
+];
+const words = ["cat", "cats", "dog", "ash"];
+
+console.log(countValidWords(matrix, words));
+
+}
+//////////////////////////////////////////////////////////////////////////////////////
+
+
+//  Q4
 
 function longestCommonPrefixAnyPair(arr1, arr2) {
     // Convert numbers to string representations
@@ -293,4 +368,4 @@ function longestCommonPrefixAnyPair(arr1, arr2) {
 // Example usage
 const arr1 = [2, 22, 2225, 25534, 2209];
 const arr2 = [2, 2222, 255552];
-console.log(longestCommonPrefixAnyPair(arr1, arr2)); 
+console.log(longestCommonPrefixAnyPair(arr1, arr2));

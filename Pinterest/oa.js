@@ -212,8 +212,6 @@ function solution(numbers) {
     return count;
 }
 
-
-
 function merge(intervals) {
     // Step 1: Sort the intervals based on the start time
     intervals.sort((a, b) => a[0] - b[0]);
@@ -221,25 +219,30 @@ function merge(intervals) {
     // Step 2: Initialize a new array to hold the merged intervals
     const merged = [];
     for (let i = 0; i < intervals.length; i++) {
-      // If the merged array is empty or the current interval does not overlap with the last interval in merged
-      if (merged.length === 0 || merged[merged.length - 1][1] < intervals[i][0]) {
-        merged.push(intervals[i]);
-      } else {
-        // There is an overlap, so merge the current interval with the last interval in merged
-        merged[merged.length - 1][1] = Math.max(merged[merged.length - 1][1], intervals[i][1]);
-      }
+        // If the merged array is empty or the current interval does not overlap with the last interval in merged
+        if (
+            merged.length === 0 ||
+            merged[merged.length - 1][1] < intervals[i][0]
+        ) {
+            merged.push(intervals[i]);
+        } else {
+            // There is an overlap, so merge the current interval with the last interval in merged
+            merged[merged.length - 1][1] = Math.max(
+                merged[merged.length - 1][1],
+                intervals[i][1]
+            );
+        }
     }
 
     // Step 3: Return the merged intervals
     return merged;
-  }
+}
 
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 // Q2
 
-
-  function calculateTotalDifferenceAndRotate(nums1, nums2) {
+function calculateTotalDifferenceAndRotate(nums1, nums2) {
     let results = [];
     const n = nums1.length; // Assuming nums1 and nums2 are of the same length
 
@@ -257,77 +260,89 @@ function merge(intervals) {
 
     return results;
 
-
     /////////////////////////////////////////////////////////////////////////
-//  Q3
+    //  Q3
 
-function isValidWord(matrix, word) {
-    const rows = matrix.length;
-    const cols = matrix[0].length;
+    function isValidWord(matrix, word) {
+        const rows = matrix.length;
+        const cols = matrix[0].length;
 
-    // Helper function to check if the next position is valid
-    function isValid(x, y) {
-        return x >= 0 && x < rows && y >= 0 && y < cols;
-    }
+        // Helper function to check if the next position is valid
+        function isValid(x, y) {
+            return x >= 0 && x < rows && y >= 0 && y < cols;
+        }
 
-    // DFS search that tracks direction and checks for direction change
-    function search(x, y, index, prevDirection, directionChanged) {
-        if (index === word.length) return directionChanged; // Found valid word with direction change
-        if (!isValid(x, y) || matrix[x][y] !== word[index]) return false;
+        // DFS search that tracks direction and checks for direction change
+        function search(x, y, index, prevDirection, directionChanged) {
+            if (index === word.length) return directionChanged; // Found valid word with direction change
+            if (!isValid(x, y) || matrix[x][y] !== word[index]) return false;
 
-        // Directions: Right (0, 1), Down (1, 0)
-        const directions = [[0, 1], [1, 0]];
-        for (let [dx, dy] of directions) {
-            const newX = x + dx;
-            const newY = y + dy;
-            const newDirection = dx === 0 ? 'H' : 'V'; // Horizontal or Vertical
-            const hasDirectionChanged = prevDirection && prevDirection !== newDirection ? true : directionChanged;
+            // Directions: Right (0, 1), Down (1, 0)
+            const directions = [
+                [0, 1],
+                [1, 0],
+            ];
+            for (let [dx, dy] of directions) {
+                const newX = x + dx;
+                const newY = y + dy;
+                const newDirection = dx === 0 ? "H" : "V"; // Horizontal or Vertical
+                const hasDirectionChanged =
+                    prevDirection && prevDirection !== newDirection
+                        ? true
+                        : directionChanged;
 
-            if (search(newX, newY, index + 1, newDirection, hasDirectionChanged)) {
-                return true;
+                if (
+                    search(
+                        newX,
+                        newY,
+                        index + 1,
+                        newDirection,
+                        hasDirectionChanged
+                    )
+                ) {
+                    return true;
+                }
+            }
+
+            return false;
+        }
+
+        // Iterate through each cell in the matrix as a potential starting point
+        for (let i = 0; i < rows; i++) {
+            for (let j = 0; j < cols; j++) {
+                if (matrix[i][j] === word[0]) {
+                    // Word start match
+                    if (search(i, j, 0, null, false)) {
+                        return true; // Found valid path for this word
+                    }
+                }
             }
         }
 
         return false;
     }
 
-    // Iterate through each cell in the matrix as a potential starting point
-    for (let i = 0; i < rows; i++) {
-        for (let j = 0; j < cols; j++) {
-            if (matrix[i][j] === word[0]) { // Word start match
-                if (search(i, j, 0, null, false)) {
-                    return true; // Found valid path for this word
-                }
+    function countValidWords(matrix, words) {
+        let count = 0;
+        for (let word of words) {
+            if (isValidWord(matrix, word)) {
+                count++;
             }
         }
+        return count;
     }
 
-    return false;
-}
+    // Example usage
+    const matrix = [
+        ["a", "c", "d"],
+        ["s", "a", "b"],
+        ["h", "t", "s"],
+    ];
+    const words = ["cat", "cats", "dog", "ash"];
 
-function countValidWords(matrix, words) {
-    let count = 0;
-    for (let word of words) {
-        if (isValidWord(matrix, word)) {
-            count++;
-        }
-    }
-    return count;
-}
-
-// Example usage
-const matrix = [
-    ["a", "c", "d"],
-    ["s", "a", "b"],
-    ["h", "t", "s"]
-];
-const words = ["cat", "cats", "dog", "ash"];
-
-console.log(countValidWords(matrix, words));
-
+    console.log(countValidWords(matrix, words));
 }
 //////////////////////////////////////////////////////////////////////////////////////
-
 
 //  Q4
 
@@ -352,8 +367,8 @@ function longestCommonPrefixAnyPair(arr1, arr2) {
     };
 
     // Compare each string in arr1 with each string in arr2 to find the longest prefix
-    strs1.forEach(s1 => {
-        strs2.forEach(s2 => {
+    strs1.forEach((s1) => {
+        strs2.forEach((s2) => {
             const currentPrefix = findPrefix(s1, s2);
             if (currentPrefix.length > longestPrefix.length) {
                 longestPrefix = currentPrefix;

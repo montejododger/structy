@@ -373,22 +373,36 @@ const bottomRightValue = (root) => {
 
 /*  GAME PLAN
 
+    recursive
+
+
 */
 
 const allTreePaths = (root) => {
+    // if node is null return out
     if (!root) return [];
+    // if node has no left or right return the root val
     if (!root.left && !root.right) return [[root.val]];
 
+    // a collection of all the paths
     const paths = [];
 
+    // progress down the left part of the tree
     const left = allTreePaths(root.left);
+
+    // iterate thru all the paths returned and add the root in front
+    // push into paths collection
     for (let path in left) {
         paths.push(root.val, ...path);
     }
+
+    // same as left
     const right = allTreePaths(root.right);
     for (const path in right) {
         paths.push(root.val, ...path);
     }
+
+    //return all paths
 
     return paths;
 };

@@ -333,12 +333,11 @@ fiveSort(nums);
     create 2 points
     start at the edn and check if its 5 or not
     once its 5 then check if the start num i  5 and if so then swap and increment start
-    if start isnt a 5, increment 
+    if start isnt a 5, increment
 
 */
 
 let fiveSort = (nums) => {
-
     let i = 0;
     let j = nums.length - 1;
 
@@ -357,3 +356,104 @@ let fiveSort = (nums) => {
 };
 
 // ############################################################################################################################################
+
+//      LEETCODE PRACTICE
+/*
+
+38. Count and Say
+Medium
+Topics
+Companies
+Hint
+The count-and-say sequence is a sequence of digit strings defined by the recursive formula:
+
+countAndSay(1) = "1"
+countAndSay(n) is the way you would "say" the digit string from countAndSay(n-1), which is then converted into a different digit string.
+To determine how you "say" a digit string, split it into the minimal number of substrings such that each substring contains exactly one unique digit. Then for each substring, say the number of digits, then say the digit. Finally, concatenate every said digit.
+
+For example, the saying and conversion for digit string "3322251":
+
+
+Given a positive integer n, return the nth term of the count-and-say sequence.
+
+
+
+Example 1:
+
+Input: n = 1
+Output: "1"
+Explanation: This is the base case.
+Example 2:
+
+Input: n = 4
+Output: "1211"
+Explanation:
+countAndSay(1) = "1"
+countAndSay(2) = say "1" = one 1 = "11"
+countAndSay(3) = say "11" = two 1's = "21"
+countAndSay(4) = say "21" = one 2 + one 1 = "12" + "11" = "1211"
+
+
+Constraints:
+
+1 <= n <= 30
+
+@params {number}
+@return {string}
+
+*/
+
+
+
+//  RECURSSIVE
+var countAndSay = function (n) {
+    // base case
+    if (n === 1) return '1';
+
+    // recursive call
+    const prev = countAndSay(n - 1);//if n = 4, 1, 11, 21, 1211
+    let results = '';
+    let count = 1;
+
+    for (let i = 0; i < prev.length; i++) {
+        // this checks it if it is second to last so that you can check the next without error
+        // keeps it in bounds
+        if (i < prev.length - 1 && prev[i] === prev[i + 1]) {
+            count++;
+        } else {
+            results += count.toString() + prev[i];
+            count = 1;
+        }
+    }
+
+    return results;
+};
+
+//  ITERATIVE
+
+var countAndSay = function(n) {
+    // base case
+    if (n === 1) return '1';
+
+    let prev = '1';
+
+    // outer loop which goes from 2 all the way equal to (n)
+    for(let i = 2; i <= n; i++){
+        let newStr = '';
+        let count = 1;
+
+        for(let j = 1; j< prev.length; j++){
+            if(prev[j] === prev[j - 1]){
+                count++;
+            } else {
+                newStr += String(count) + prev[j - 1];
+                count = 1;
+            }
+        }
+
+        newStr += String(count) + prev[[prev.length - 1]];
+        prev = newStr;
+    }
+
+    return prev;
+}

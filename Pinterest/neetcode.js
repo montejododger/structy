@@ -86,15 +86,38 @@ var twoSum = function (nums, target) {
     if it does exist then return i and the value of the key-value pair
 */
 var twoSum = function (nums, target) {
-
     const complement = {};
-    for(let i = 0; i < nums.length; i++){
-        const num = nums[i]
+    for (let i = 0; i < nums.length; i++) {
+        const num = nums[i];
         const comp = target - num;
-        if(comp in complement) return [complement[comp], i]
+        if (comp in complement) return [complement[comp], i];
         complement[num] = i;
     }
 };
 
-
 /////////////////////////////////////////////////
+
+// this leverages the fact that anagrams are the same letters just different order
+// you will sort them and create a key with the sorted str
+// push the orginal str into the values arr
+// return the values of the object
+
+var groupAnagrams = function (strs) {
+    //create an object to store sorted strs as keys and an array as its value that you will push words that match into
+    const collection = {};
+
+    // iterate thru the strs
+    for (let str of strs) {
+        // split sort and join each str
+        const sorted = str.split("").sort().join("");
+
+        //check if the sorted word is already in the object, if not create a key-value- pair with an empty [] as its value
+        if (!collection[sorted]) collection[sorted] = [];
+
+        //push non-sorted str into the key it matches
+        collection[sorted].push(str);
+    }
+
+    // grab the values only of the object and return those
+    return Object.values(collection);
+};

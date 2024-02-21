@@ -121,3 +121,36 @@ var groupAnagrams = function (strs) {
     // grab the values only of the object and return those
     return Object.values(collection);
 };
+
+/////////////////////////////////////////////////
+
+
+ //create an object to store key value pairs
+ // iterate thru the nums
+ // create key value pairs for each integer
+
+ var topKFrequent = function(nums, k) {
+
+    // intialize an object to get a count of all nums and have a quick looks up time
+    const count = {};
+
+    //iterate thru the nums array adding it to object
+    for (let num of nums){
+        count[num] = (count[num] || 0) + 1;
+    }
+
+    // intialize an array to hold k values in it
+    const results = [];
+    // create an array of key value pairs and sort them by their values from biggest to lowest
+    // push k amount of times into result array
+    // you can slice or not slice, not sure it matters, also could just map over it and grab the key of each pair
+    const sorted = Object.entries(count).sort((a, b) => b[1] - a[1]) //.slice(0,k).map(pair => pair[0])
+    // console.log(sorted)
+    for(let i = 0; i < k; i++){
+        const pair = sorted[i];
+        results.push(pair[0])
+    }
+
+    // return results array
+    return results;
+};

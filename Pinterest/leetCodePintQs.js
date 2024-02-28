@@ -131,17 +131,16 @@ s consists of lowercase English letters.
 
 // set freq chars count to 0
 // loop thru the OBJ
-    // check the value of the current key
-    // check the value of i and reset if needed
-    // start placing the other chars in the array alternati g between the most freq
-
+// check the value of the current key
+// check the value of i and reset if needed
+// start placing the other chars in the array alternati g between the most freq
 
 var reorganizeString = function (s) {
     const count = {};
     let newExp = Array(s.length);
 
-    for(let char of s){
-    count[char] = (count[char] || 0) + 1;
+    for (let char of s) {
+        count[char] = (count[char] || 0) + 1;
     }
     // for(let char of s) count[char] = (count[char] || 0) + 1
 
@@ -177,4 +176,133 @@ var reorganizeString = function (s) {
     }
 
     return newExp.join("");
+};
+
+///////////////////////////////////////////////////////////////
+
+//! HIGH LEVEL OVERVIEW
+//
+
+// RECURSIVE
+var letterCombinations = function (digits) {
+    if (!digits) return [];
+
+    digitsToLetters = {
+        2: "abc",
+        3: "def",
+        4: "ghi",
+        5: "jkl",
+        6: "mno",
+        7: "pqr",
+        8: "tuv",
+        9: "wxyz",
+    };
+    const results = [];
+
+    function backtrack(index, path) {
+        if (path.length === digits.length) {
+            results.push(path);
+            return;
+        }
+
+        const possibleLetters = digitsToLetters[digits[index]];
+        for (let i = 0; i < possibleLetters.length; i++) {
+            backtrack(index + 1, path + possibleLetters[i]);
+        }
+    }
+
+    backtrack(0, "");
+
+    return results;
+};
+
+// ITERATIVE
+var letterCombinations = function (digits) {
+    if (digits.length === 0) return [];
+
+    const digitsToLetters = {
+        2: "abc",
+        3: "def",
+        4: "ghi",
+        5: "jkl",
+        6: "mno",
+        7: "pqrs",
+        8: "tuv",
+        9: "wxyz",
+    };
+
+    let queue = [""]; // Start with an empty string to build upon
+
+    for (let digit of digits) { // digits = "23"
+        let levelSize = queue.length; // Number of combinations to expand
+        for (let i = 0; i < levelSize; i++) {
+            let currentCombination = queue.shift(); // Take the first combination off the queue
+            for (let letter of digitsToLetters[digit]) {
+                queue.push(currentCombination + letter); // Create new combinations and add them to the queue
+            }
+        }
+    }
+
+    return queue; // The queue now contains all possible combinations
+};
+
+///////////////////////////////////////////////////////////////////////
+
+// A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not).
+
+// Given two strings source and target, return the minimum number of subsequences of source such that their concatenation equals target. If the task is impossible, return -1.
+
+
+
+// Example 1:          i ->            j
+// Input: source = "abc", target = "abcbc"
+
+// Output: 2
+// Explanation: The target "abcbc" can be formed by "abc" and "bc", which are subsequences of source "abc".
+
+// Example 2:
+// Input: source = "abc", target = "acdbc""
+// Output: -1
+// Explanation: The target string cannot be constructed from the subsequences of source string due to the character "d" in target string.
+
+// Example 3:
+// Input: source = "xyz", target = "xz y xz"
+// Output: 3
+// Explanation: The target string can be constructed as follows "xz" + "y" + "xz".
+
+// one point for source char and one point for targer char
+
+
+// create 2 point i and j
+// init count = 0
+// while loop until j gets to end  j < target.length
+    // increment count every for loop
+    // check value of source and target at i && j
+    // if they match incement both
+    // if not increment just i to check next char in source
+    // if target[j] is not found return -1
+
+ // return count
+
+ var shortestWay = function(source, target) {
+    // t1s = "abc"
+    // t1t = "abcbc"
+
+    let j = 0;
+    let count = 0;
+
+    while(j < target.length){ // j = 3   target length = 5
+        count++; // count = 2
+
+        let flag = false;
+        for(let i = 0; i < source.length; i++){ // 2
+            if(source[i] === target[j]) { // a = a abc = abc
+                j++; // j = 5
+                flag = true;
+            }
+        }
+
+        if(!flag) return -1;
+    }
+    return count;
 };

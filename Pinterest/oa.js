@@ -263,6 +263,8 @@ function calculateTotalDifferenceAndRotate(nums1, nums2) {
     /////////////////////////////////////////////////////////////////////////
     //  Q3
 
+    //
+
     function isValidWord(matrix, word) {
         const rows = matrix.length;
         const cols = matrix[0].length;

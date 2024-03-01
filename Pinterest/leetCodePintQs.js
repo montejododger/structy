@@ -13,6 +13,19 @@ var isSubsequence = function (s, t) {
     return i === s.length;
 };
 
+
+var isSubsequence = function(s, t) {
+
+    let i = 0;
+    for(let char of t){
+        if(i === s.length) return true;
+        if(char === s[i]) i++;
+    }
+
+    return i === s.length;
+};
+
+
 // MEDIUM
 
 var countAndSay = function (n) {

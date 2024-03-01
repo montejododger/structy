@@ -304,6 +304,27 @@ var compress = function(chars) {
 };
 
 ///////////////////////////////////////////////////////////////////////
+//! UNIQUE PATHS II 63
+
+var uniquePathsWithObstacles = function(obstacleGrid) {
+
+};
+
+// DFS SEARCH
+//[[0,0,0],[0,1,0],[0,0,0]]
+
+/*
+grid is  M x N
+tryung to get to the bottom right which is m - 1 && n - 1
+they need t
+base case
+check value of current if 1 return false
+if 0 then proceed with incrementing to the right or left
+
+
+*/
+
+///////////////////////////////////////////////////////////////////////////
 
 // A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not).
 
@@ -362,4 +383,80 @@ var compress = function(chars) {
         if(!flag) return -1;
     }
     return count;
+};
+
+/////////////////////////////////////////////////////////////////////////////
+//! JUMP GAME III 1306
+//
+// Given an array of non-negative integers arr, you are initially positioned at start index of the array. When you are at index i, you can jump to i + arr[i] or i - arr[i], check if you can reach any index with value 0.
+
+// Notice that you can not jump outside of the array at any time.
+
+// Example 1:
+// Input: arr = [4,2,3,0,3,1,2], start = 5
+// Output: true
+// Explanation:
+// All possible ways to reach at index 3 with value 0 are:
+// index 5 -> index 4 -> index 1 -> index 3
+// index 5 -> index 6 -> index 4 -> index 1 -> index 3
+
+// Example 2:
+// Input: arr = [4,2,3,0,3,1,2], start = 0
+// Output: true
+// Explanation:
+// One possible way to reach at index 3 with value 0 is:
+// index 0 -> index 4 -> index 1 -> index 3
+
+// Example 3:
+// Input: arr = [3,0,2,1,2], start = 2
+// Output: false
+// Explanation: There is no way to reach at index 1 with value 0.
+
+
+/*
+
+breath or depth
+
+check if adding or subtracting will put you out of bounds 0 <  || < arr.length
+change value of current index to -1 after moving
+
+base case -1  false
+// base case 0 true
+
+go in either direction + or -
+recursively call fn with start being add or subtracted
+    checking the value to return true or false;
+    // make sure it stays in bounds
+    if arr[start] === 0 return true
+const plus  =   start + arr[i]
+const minus =   start - arr[j]
+
+return (canReach(arr,minus) || canReach(arr,plus))
+
+*/
+// Example 1:
+// Input: arr = [4,2,3,0,3,1,2], start = 5
+// Output: true
+// Explanation:
+// All possible ways to reach at index 3 with value 0 are:
+// index 5 -> index 4 -> index 1 -> index 3
+// index 5 -> index 6 -> index 4 -> index 1 -> index 3
+
+var canReach = function(arr, start) { // arr = [4,2,3,0,3,1,2] start = 5
+    if(start < 0 || start >= arr.length || arr[start] === -1) return false;
+    if(arr[start] === 0) return true;
+
+
+    const plus = start + arr[start]; //  5 + 1, 6 + 2,
+    const minus = start - arr[start]; // 5 - 1, 4 - 3,
+    arr[start] = -1; // [4,2,3,0,3,-1,2]
+    // [4,2,3,0,3,-1,2]
+    // arr[start] = -1; // [4,2,3,0,3,-1,2]
+    // [4,2,3,0,-1,-1,2]
+    // start (on minus path)
+    // [4,-1,3,0,3,-1,2]
+    //min (on minus path)
+
+    //(canReach(arr, 5 + 1)       (canReach(arr, 5 - 1)
+    return (canReach(arr, plus) || canReach(arr, minus))
 };

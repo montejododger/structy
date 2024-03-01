@@ -258,6 +258,50 @@ var letterCombinations = function (digits) {
 
     return queue; // The queue now contains all possible combinations
 };
+////////////////////////////////////////////////////////////////////////////
+
+//! HIGH LEVEL OVERVIEW
+
+
+var compress = function(chars) {
+
+    // two pointers // sliding window ish
+    let i = 0;
+    let j = 0;
+
+    // while loop to loop thru once
+    while (j < chars.length){
+        // init a variable for char and count
+        let char = chars[j];
+        let count = 0;
+
+        // check if chars are the same
+        // while loop to increment j while they are the same char, also increasing count
+        while(chars[j] === char){
+            j++;
+            count++;
+        }
+
+        // assign current index i to char and increment i to next position
+        chars[i] = char;
+        i++;
+
+        // check count if it more then 1
+        // assign the value to the current index and increment
+        if(count > 1) {
+            const strCount = String(count)
+            for(let char of strCount){
+                chars[i] = char;
+                i++;
+            }
+        }
+
+    }
+
+    // return i, which is the total length of the new str
+
+    return i;
+};
 
 ///////////////////////////////////////////////////////////////////////
 

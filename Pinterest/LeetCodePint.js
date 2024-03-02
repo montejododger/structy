@@ -43,7 +43,41 @@ var isSubsequence = function (s, t) {
 ////////////////////////////////////////////////////////
 //! MEDIUM
 
+/*
+
+figure out the base case, in this case at last thing we want to return or what we want to start with is '1'
+
+recursively call till base case
+create an emoty string variable
+init a count starting at 1 cause there will always be one
+
+loop thru the recursive call return, which is a string with a for loop
+
+check if i is at least 2 index away from the end and check if the current and current + 1 match, increment count if so
+
+otherwise concate to newStr the count and the current index off the returned string from the previous call
+*/
+
 //! Count snd Say 38
+
+var countAndSay = function(n) {
+    if (n === 1) return '1';  // Base case
+
+    const prev = countAndSay(n-1);  // Recursive call to get the (n-1)th term
+    let results = '';  // Initialize an empty string to build the nth term
+    let count = 1;  // Initialize count
+
+    for(let i = 0; i < prev.length; i++){  // Iterate through the (n-1)th term
+        if(i < prev.length - 1 && prev[i] === prev[i+1]){
+            count++;  // If the current and next characters are the same, increment count
+        } else {
+            results += String(count) + prev[i];  // Append the count and character to results
+            count = 1;  // Reset count for the next character
+        }
+    }
+
+    return results;  // Return the constructed string
+};
 
 ////////////////////////////////////////////////////////
 

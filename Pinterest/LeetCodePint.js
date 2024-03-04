@@ -68,7 +68,8 @@ var countAndSay = function(n) {
     let count = 1;  // Initialize count
 
     for(let i = 0; i < prev.length; i++){  // Iterate through the (n-1)th term
-        if(i < prev.length - 1 && prev[i] === prev[i+1]){
+        if(i < prev.length - 1 && prev[i] === prev[i+1]){ // this check is important as we need to go to the last number but also need to check if they are the same
+
             count++;  // If the current and next characters are the same, increment count
         } else {
             results += String(count) + prev[i];  // Append the count and character to results
@@ -82,6 +83,43 @@ var countAndSay = function(n) {
 ////////////////////////////////////////////////////////
 
 //! Minimize Result by Adding Parentheses to Expression 2232
+
+var minimizeResult = function(expression) {
+
+    const plusIndex = expression.indexOf("+");
+    // const firstNums = expression.slice(0, plusIndex);
+    // const secondNums = expression.slice(plusIndex + 1);
+    let minVal = Infinity;
+    let minExp = "";
+
+    for(let i = 0; i < plusIndex; i++){
+        for(let j = expression.length; j > plusIndex + 1; j--){
+            let A = i === 0 ? 1 : Number(expression.slice(0, i));
+            let B = Number(expression.slice(i, plusIndex));
+            let C = Number(expression.slice(plusIndex + 1, j));
+            let D = j === expression.length ? 1 : Number(expression.slice(j));
+            const newVal = A * (B + C) * D;
+            // console.log(A)
+            // console.log(B)
+            // console.log(C)
+            // console.log(D)
+            // console.log(`${A} * (${B} + ${C}) * ${D}`)
+            // console.log(`newVal = ${newVal}`)
+
+
+            if (newVal < minVal){
+                const firstPart = expression.slice(0, i) + "(" + expression.slice(i, plusIndex + 1)
+                const secondPart = expression.slice(plusIndex + 1, j) + ")" + expression.slice(j)
+                minVal = newVal;
+                minExp = `${firstPart}${secondPart}`
+                // console.log(`firstPart = ${firstPart}`)
+                // console.log(`secondPart = ${secondPart}`)
+            }
+        }
+    }
+
+    return minExp;
+};
 
 ////////////////////////////////////////////////////////
 

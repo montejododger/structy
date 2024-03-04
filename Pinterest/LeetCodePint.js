@@ -220,6 +220,24 @@ var compress = function (chars) {
 ////////////////////////////////////////////////////////
 
 //! Unique Paths II 63
+
+var uniquePathsWithObstacles = function(obstacleGrid) {
+    const rowL = obstacleGrid.length;
+    const colL = obstacleGrid[0].length;
+    const [lastRow, lastCol] = [obstacleGrid.length - 1, obstacleGrid[0].length -1];
+
+    if(obstacleGrid[0][0] === 1 || obstacleGrid[lastRow][lastCol] === 1) return 0;
+
+    function search(x, y){
+        if (x >= rowL || y >=colL || obstacleGrid[x][y] === 1) return 0;
+
+        if(x === lastRow && y === lastCol) return 1;
+
+        return search(x + 1, y) + search(x, y + 1);
+    }
+
+    return search(0,0);
+};
 ////////////////////////////////////////////////////////
 
 //! Letter Combination of a Phone Number 17

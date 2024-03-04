@@ -60,40 +60,41 @@ otherwise concate to newStr the count and the current index off the returned str
 
 //! Count snd Say 38
 
-var countAndSay = function(n) {
-    if (n === 1) return '1';  // Base case
+var countAndSay = function (n) {
+    if (n === 1) return "1"; // Base case
 
-    const prev = countAndSay(n-1);  // Recursive call to get the (n-1)th term
-    let results = '';  // Initialize an empty string to build the nth term
-    let count = 1;  // Initialize count
+    const prev = countAndSay(n - 1); // Recursive call to get the (n-1)th term
+    let results = ""; // Initialize an empty string to build the nth term
+    let count = 1; // Initialize count
 
-    for(let i = 0; i < prev.length; i++){  // Iterate through the (n-1)th term
-        if(i < prev.length - 1 && prev[i] === prev[i+1]){ // this check is important as we need to go to the last number but also need to check if they are the same
+    for (let i = 0; i < prev.length; i++) {
+        // Iterate through the (n-1)th term
+        if (i < prev.length - 1 && prev[i] === prev[i + 1]) {
+            // this check is important as we need to go to the last number but also need to check if they are the same
 
-            count++;  // If the current and next characters are the same, increment count
+            count++; // If the current and next characters are the same, increment count
         } else {
-            results += String(count) + prev[i];  // Append the count and character to results
-            count = 1;  // Reset count for the next character
+            results += String(count) + prev[i]; // Append the count and character to results
+            count = 1; // Reset count for the next character
         }
     }
 
-    return results;  // Return the constructed string
+    return results; // Return the constructed string
 };
 
 ////////////////////////////////////////////////////////
 
 //! Minimize Result by Adding Parentheses to Expression 2232
 
-var minimizeResult = function(expression) {
-
+var minimizeResult = function (expression) {
     const plusIndex = expression.indexOf("+");
     // const firstNums = expression.slice(0, plusIndex);
     // const secondNums = expression.slice(plusIndex + 1);
     let minVal = Infinity;
     let minExp = "";
 
-    for(let i = 0; i < plusIndex; i++){
-        for(let j = expression.length; j > plusIndex + 1; j--){
+    for (let i = 0; i < plusIndex; i++) {
+        for (let j = expression.length; j > plusIndex + 1; j--) {
             let A = i === 0 ? 1 : Number(expression.slice(0, i));
             let B = Number(expression.slice(i, plusIndex));
             let C = Number(expression.slice(plusIndex + 1, j));
@@ -106,12 +107,17 @@ var minimizeResult = function(expression) {
             // console.log(`${A} * (${B} + ${C}) * ${D}`)
             // console.log(`newVal = ${newVal}`)
 
-
-            if (newVal < minVal){
-                const firstPart = expression.slice(0, i) + "(" + expression.slice(i, plusIndex + 1)
-                const secondPart = expression.slice(plusIndex + 1, j) + ")" + expression.slice(j)
+            if (newVal < minVal) {
+                const firstPart =
+                    expression.slice(0, i) +
+                    "(" +
+                    expression.slice(i, plusIndex + 1);
+                const secondPart =
+                    expression.slice(plusIndex + 1, j) +
+                    ")" +
+                    expression.slice(j);
                 minVal = newVal;
-                minExp = `${firstPart}${secondPart}`
+                minExp = `${firstPart}${secondPart}`;
                 // console.log(`firstPart = ${firstPart}`)
                 // console.log(`secondPart = ${secondPart}`)
             }
@@ -124,6 +130,33 @@ var minimizeResult = function(expression) {
 ////////////////////////////////////////////////////////
 
 //! Reorganize String 767
+
+var reorganizeString = function (s) {
+    let count = {};
+
+    for (let char of s) {
+        count[char] = (count[char] || 0) + 1;
+    }
+
+    const sortedChars = Object.entries(count).sort((a, b) => b[1] - a[1]);
+
+    const results = Array(s.length).fill(null);
+
+    let index = 0;
+    for (const [char, freq] of sortedChars) {
+        if (freq > Math.floor((s.length + 1) / 2)) return "";
+
+        for (let j = 0; j < freq; j++) {
+            if (index >= s.length) index = 1; // this loops it back to 1 after its filled the even number of spaces
+
+            results[index] = char;
+            index += 2;
+        }
+    }
+
+    return results.join("");
+};
+
 ////////////////////////////////////////////////////////
 
 //! Jump Game III 1306
@@ -217,26 +250,84 @@ var compress = function (chars) {
 ////////////////////////////////////////////////////////
 
 //! Meeting Rooms II 253
+/*
+Input: intervals = [[0,30],[5,10],[15,20]]
+Output: 2
+Explanation:
+
+You need two meeting rooms.
+Room 1 could be booked for the meeting from 0 to 30.
+Room 2 can be used for the meetings from 5 to 10 and then from 15 to 20.
+
+Input: intervals = [[7,10],[2,4]]
+Output: 1
+Explanation:
+
+Only one meeting room is needed.
+The room can be used for the first meeting from 2 to 4 and then for the second meeting from 7 to 10.
+
+Input: intervals = [[13,15],[1,13]]
+Output: 1
+Explanation:
+
+Only one meeting room is required because the meetings don't overlap in time.
+*/
+
+// intervals = [[0, 30], [5, 10], [15, 20]]
+
+function minMeetingRooms(intervals) {
+    if (intervals.length === 0) return 0;
+
+    // Step 1: Sort the intervals by their start times
+    intervals.sort((a, b) => a[0] - b[0]);
+    console.log(`intervals = ${intervals}`);
+
+    // Initialize a min heap (using an array to simulate)
+    let minHeap = [intervals[0][1]]; // Add the end time of the first meeting
+    console.log(`minHeap = ${minHeap}`);
+
+    // Step 2: Iterate through the sorted intervals
+    for (let i = 1; i < intervals.length; i++) {
+        // If the current meeting starts after the earliest ending meeting, reuse the room
+        console.log(`intervals[i][0] = ${intervals[i][0]}`);
+        if (intervals[i][0] >= minHeap[0]) {
+            minHeap.shift(); // Remove the earliest ending meeting
+        }
+
+        // Add the current meeting's end time to the heap
+        minHeap.push(intervals[i][1]);
+        // Keep the heap sorted (min heap based on end times)
+        minHeap.sort((a, b) => a - b);
+    }
+
+    // The size of the heap represents the number of rooms needed
+    return minHeap.length;
+}
+
 ////////////////////////////////////////////////////////
 
 //! Unique Paths II 63
 
-var uniquePathsWithObstacles = function(obstacleGrid) {
+var uniquePathsWithObstacles = function (obstacleGrid) {
     const rowL = obstacleGrid.length;
     const colL = obstacleGrid[0].length;
-    const [lastRow, lastCol] = [obstacleGrid.length - 1, obstacleGrid[0].length -1];
+    const [lastRow, lastCol] = [
+        obstacleGrid.length - 1,
+        obstacleGrid[0].length - 1,
+    ];
 
-    if(obstacleGrid[0][0] === 1 || obstacleGrid[lastRow][lastCol] === 1) return 0;
+    if (obstacleGrid[0][0] === 1 || obstacleGrid[lastRow][lastCol] === 1)
+        return 0;
 
-    function search(x, y){
-        if (x >= rowL || y >=colL || obstacleGrid[x][y] === 1) return 0;
+    function search(x, y) {
+        if (x >= rowL || y >= colL || obstacleGrid[x][y] === 1) return 0;
 
-        if(x === lastRow && y === lastCol) return 1;
+        if (x === lastRow && y === lastCol) return 1;
 
         return search(x + 1, y) + search(x, y + 1);
     }
 
-    return search(0,0);
+    return search(0, 0);
 };
 ////////////////////////////////////////////////////////
 

@@ -386,3 +386,55 @@ function longestCommonPrefixAnyPair(arr1, arr2) {
 const arr1 = [2, 22, 2225, 25534, 2209];
 const arr2 = [2, 2222, 255552];
 console.log(longestCommonPrefixAnyPair(arr1, arr2));
+
+
+/*
+
+    Julie goes to a bank to open up an account.
+
+    When she arrives at the bank, there are N agents (number 1 to N) who are not serving any customer, and M customers have already arrived before Julie (Julie is at position M+1 in the line).
+
+    This particular bank follows the rule of first-come-first-serve.
+
+    If more than 1 agent can serve a customer at any time, the customer will always choose the one with the lowest agent number.
+
+    For agents, each of them has a constant serving time that the i-th agent will take times[i] minutes to serve a customer.
+
+    Assume Julie arrived at time 0, and all the agents are idle and start to serve the customers.
+
+    We would like to know how many minutes Julie has to wait before meeting with an agent?
+*/
+
+
+
+function calculateWaitTime(M, N, times) {
+    // Initialize the agents' next available times as an array of objects
+    let agents = Array.from({ length: N }, (_, i) => ({ nextAvailableTime: 0, agentId: i }));
+
+    // Function to serve a customer
+    const serveCustomer = () => {
+      // Sort agents by their next available time, then by agent ID
+      agents.sort((a, b) => a.nextAvailableTime - b.nextAvailableTime || a.agentId - b.agentId);
+      // Get the soonest available agent
+      const soonestAgent = agents[0];
+      // Update the soonest agent's next available time
+      soonestAgent.nextAvailableTime += times[soonestAgent.agentId];
+    };
+
+    // Serve all customers ahead of Julie
+    for (let i = 0; i < M; i++) {
+      serveCustomer();
+    }
+
+    // After serving all customers ahead, the soonest available agent will serve Julie
+    // Sort one more time to find the next available agent for Julie
+    agents.sort((a, b) => a.nextAvailableTime - b.nextAvailableTime || a.agentId - b.agentId);
+    // Julie's wait time is the next available time of the agent who will serve her
+    return agents[0].nextAvailableTime;
+  }
+
+  // Example usage
+  const M = 5; // Customers ahead of Julie
+  const N = 3; // Number of agents
+  const times = [2, 1, 3]; // Serving times for each agent
+  console.log(calculateWaitTime(M, N, times)); // Output Julie's wait time

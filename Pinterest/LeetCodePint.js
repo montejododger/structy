@@ -111,9 +111,9 @@ var minimizeResult = function (expression) {
                 const firstPart =
                     expression.slice(0, i) +
                     "(" +
-                    expression.slice(i, plusIndex + 1);
+                    expression.slice(i, plusIndex);
                 const secondPart =
-                    expression.slice(plusIndex + 1, j) +
+                    expression.slice(plusIndex, j) +
                     ")" +
                     expression.slice(j);
                 minVal = newVal;
@@ -140,7 +140,7 @@ var reorganizeString = function (s) {
 
     const sortedChars = Object.entries(count).sort((a, b) => b[1] - a[1]);
 
-    const results = Array(s.length).fill(null);
+    const results = [];
 
     let index = 0;
     for (const [char, freq] of sortedChars) {

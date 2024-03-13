@@ -156,3 +156,30 @@ var groupAnagrams = function (strs) {
 };
 
 /////////////////////////////////////////////////
+//! JUMPGAME II 45
+
+var jump = function(nums) {
+    let jumps = 0; // Number of tickets bought
+    let currEnd = 0; // The station your current ticket gets you to
+    let currFarthest = 0; // The furthest station you can reach with a ticket bought at any station within current ride's reach
+
+    // Iterate through each station to plan your journey
+    for (let i = 0; i < nums.length - 1; i++) {
+        // if(currEnd >= nums.length) return jumps
+
+        // Update your travel plan based on stations' reach
+        currFarthest = Math.max(currFarthest, i + nums[i]);// (0, 0 + 2) = 2
+        console.log(`i = ${i}`)
+        console.log(`currFarthest = ${currFarthest}`)
+        console.log(`currEnd = ${currEnd}`)
+        console.log(`jumps = ${jumps}`)
+
+        // Time to buy a new ticket and make the next jump
+        if (i === currEnd) {
+            jumps++; // Buy a new ticket (jump)
+            currEnd = currFarthest; // Board the ride to the furthest station planned
+        }
+    }
+
+    return jumps; // The minimum number of tickets (jumps) to reach the last station
+};

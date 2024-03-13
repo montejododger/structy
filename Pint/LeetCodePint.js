@@ -60,6 +60,8 @@ otherwise concate to newStr the count and the current index off the returned str
 
 //! Count snd Say 38
 
+//recursive
+
 var countAndSay = function (n) {
     if (n === 1) return "1"; // Base case
 
@@ -80,6 +82,33 @@ var countAndSay = function (n) {
     }
 
     return results; // Return the constructed string
+};
+
+// iterative
+
+var countAndSay = function (n) {
+    if (n === 1) return "1";
+
+    let prev = "1";
+
+    for (let i = 2; i <= n; i++) {
+        let newStr = "";
+        let count = 1;
+
+        for (let j = 1; j < prev.length; j++) {
+            if (prev[j] === prev[j - 1]) {
+                count++;
+            } else {
+                newStr += String(count) + prev[j - 1];
+                count = 1;
+            }
+        }
+
+        newStr += String(count) + prev[prev.length - 1];
+        prev = newStr;
+    }
+
+    return prev;
 };
 
 ////////////////////////////////////////////////////////
@@ -113,9 +142,7 @@ var minimizeResult = function (expression) {
                     "(" +
                     expression.slice(i, plusIndex);
                 const secondPart =
-                    expression.slice(plusIndex, j) +
-                    ")" +
-                    expression.slice(j);
+                    expression.slice(plusIndex, j) + ")" + expression.slice(j);
                 minVal = newVal;
                 minExp = `${firstPart}${secondPart}`;
                 // console.log(`firstPart = ${firstPart}`)

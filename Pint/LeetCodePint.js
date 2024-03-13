@@ -87,14 +87,19 @@ var countAndSay = function (n) {
 // iterative
 
 var countAndSay = function (n) {
+    // base case will be the same
     if (n === 1) return "1";
 
+    // create the initial string
     let prev = "1";
 
+    // starting at 2 go up till n
     for (let i = 2; i <= n; i++) {
+        //new str and count variable
         let newStr = "";
         let count = 1;
 
+        // this is to check for consecutives
         for (let j = 1; j < prev.length; j++) {
             if (prev[j] === prev[j - 1]) {
                 count++;
@@ -104,6 +109,7 @@ var countAndSay = function (n) {
             }
         }
 
+        // this is a catch for any duplicates that wold get added since we started at 1 in the loop above
         newStr += String(count) + prev[prev.length - 1];
         prev = newStr;
     }

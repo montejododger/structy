@@ -415,8 +415,9 @@ function calculateWaitTime(M, N, times) {
     }));
 
     // Function to serve a customer
-    const serveCustomer = () => {
+    const serveCustomer = (time) => {
         // Sort agents by their next available time, then by agent ID
+        // console.log(agents)
         agents.sort(
             (a, b) =>
                 a.nextAvailableTime - b.nextAvailableTime ||
@@ -425,12 +426,14 @@ function calculateWaitTime(M, N, times) {
         // Get the soonest available agent
         const soonestAgent = agents[0];
         // Update the soonest agent's next available time
-        soonestAgent.nextAvailableTime += times[soonestAgent.agentId];
+        soonestAgent.nextAvailableTime += time;
     };
 
     // Serve all customers ahead of Julie
+    let j = 0;
     for (let i = 0; i < M; i++) {
-        serveCustomer();
+        serveCustomer(times[j]);
+        j++
     }
 
     // After serving all customers ahead, the soonest available agent will serve Julie
@@ -444,7 +447,35 @@ function calculateWaitTime(M, N, times) {
 }
 
 // Example usage
-const M = 5; // Customers ahead of Julie
-const N = 3; // Number of agents
-const times = [2, 1, 3]; // Serving times for each agent
+let M = 5; // Customers ahead of Julie
+let N = 3; // Number of agents
+let times = [2, 1, 3, 5, 9, 2]; // Serving times for each agent
 console.log(calculateWaitTime(M, N, times)); // Output Julie's wait time
+
+/////////////////////////////////
+
+//none heap way
+
+function timeToMeetAgent(agents, times, M) {
+    // Initialize availability times for each agent
+    let agentAvailability = new Array(agents).fill(0);
+
+    // Assign customers to agents
+    for (let customer = 0; customer < M; customer++) {
+        // Find the earliest available agent for the next customer
+        let minTime = agentAvailability[0];
+        let agentIndex = 0;
+        for (let i = 1; i < agents; i++) {
+            if (agentAvailability[i] < minTime) {
+                minTime = agentAvailability[i];
+                agentIndex = i;
+            }
+        }
+        // Update the availability time for the chosen agent
+        agentAvailability[agentIndex] += times[agentIndex];
+    }
+
+    // Now it's Julie's turn, find the earliest available agent for Julie
+    let julieWaitTime = Math.min(...agentAvailability);
+    return julieWaitTime;
+}

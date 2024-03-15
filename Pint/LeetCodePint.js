@@ -365,6 +365,33 @@ var uniquePathsWithObstacles = function (obstacleGrid) {
 ////////////////////////////////////////////////////////
 
 //! Letter Combination of a Phone Number 17
+
+var letterCombinations = function(digits) {
+    if (!digits) return [];
+
+    digitsToLetters = {
+        "2":"abc", "3": "def", "4":"ghi", "5":"jkl", "6":"mno", "7":"pqr", "8":"tuv", "9":"wxyz"
+    }
+
+    // starts with length of 1
+    let queue = [""]; // Start with an empty string to build upon
+    // console.log(queue.length)
+
+    for (let digit of digits) {
+        let levelSize = queue.length; // Number of combinations to expand
+        // console.log(levelSize)
+        for (let i = 0; i < levelSize; i++) {
+            // console.log(levelSize)
+            let currentCombination = queue.shift(); // Take the first combination off the queue
+            for (let letter of digitsToLetters[digit]) {
+                queue.push(currentCombination + letter); // Create new combinations and add them to the queue
+            }
+        }
+    }
+
+    return queue; // The queue now contains all possible combinations
+
+}
 ////////////////////////////////////////////////////////
 
 //! HARD

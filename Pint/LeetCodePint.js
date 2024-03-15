@@ -121,10 +121,32 @@ var countAndSay = function (n) {
 
 //! Minimize Result by Adding Parentheses to Expression 2232
 
+/*
+find the plus sign
+two variables for the lowest sum and the expression of lowest sum
+
+
+loop thru the first part till the plus sign
+    nested loop and from plus sign to the end
+
+    create pieces for each opart of the expression
+        be mindful of beginning and end and have them set to 1
+
+        create the expression to find the new sum
+        check if new sum is lower then any prev sum
+
+            if new sum is lower
+                make lowest sum = to new sum
+                and change the expression to the new expression
+
+
+    return new lowest expression
+*/
+
+
 var minimizeResult = function (expression) {
     const plusIndex = expression.indexOf("+");
-    // const firstNums = expression.slice(0, plusIndex);
-    // const secondNums = expression.slice(plusIndex + 1);
+
     let minVal = Infinity;
     let minExp = "";
 
@@ -135,12 +157,6 @@ var minimizeResult = function (expression) {
             let C = Number(expression.slice(plusIndex + 1, j));
             let D = j === expression.length ? 1 : Number(expression.slice(j));
             const newVal = A * (B + C) * D;
-            // console.log(A)
-            // console.log(B)
-            // console.log(C)
-            // console.log(D)
-            // console.log(`${A} * (${B} + ${C}) * ${D}`)
-            // console.log(`newVal = ${newVal}`)
 
             if (newVal < minVal) {
                 const firstPart =
@@ -151,8 +167,6 @@ var minimizeResult = function (expression) {
                     expression.slice(plusIndex, j) + ")" + expression.slice(j);
                 minVal = newVal;
                 minExp = `${firstPart}${secondPart}`;
-                // console.log(`firstPart = ${firstPart}`)
-                // console.log(`secondPart = ${secondPart}`)
             }
         }
     }
@@ -366,12 +380,19 @@ var uniquePathsWithObstacles = function (obstacleGrid) {
 
 //! Letter Combination of a Phone Number 17
 
-var letterCombinations = function(digits) {
+var letterCombinations = function (digits) {
     if (!digits) return [];
 
     digitsToLetters = {
-        "2":"abc", "3": "def", "4":"ghi", "5":"jkl", "6":"mno", "7":"pqr", "8":"tuv", "9":"wxyz"
-    }
+        2: "abc",
+        3: "def",
+        4: "ghi",
+        5: "jkl",
+        6: "mno",
+        7: "pqr",
+        8: "tuv",
+        9: "wxyz",
+    };
 
     // starts with length of 1
     let queue = [""]; // Start with an empty string to build upon
@@ -390,8 +411,7 @@ var letterCombinations = function(digits) {
     }
 
     return queue; // The queue now contains all possible combinations
-
-}
+};
 ////////////////////////////////////////////////////////
 
 //! HARD

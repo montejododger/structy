@@ -176,6 +176,25 @@ var minimizeResult = function (expression) {
 
 ////////////////////////////////////////////////////////
 
+/*
+get a count of all chars in s
+
+sort chars by there count
+
+create an empty array and a new pointer at 0
+
+loop thru a deconstructed sorted chars array
+
+    check if and of the counts are more then half of the length of s
+        early return if so
+
+        start placing chars in new array at pointer and increment point by 2
+        if point goes out of bound or equals lenth of s reset to 1
+
+return thr new array joined to make a string;
+
+*/
+
 //! Reorganize String 767
 
 var reorganizeString = function (s) {

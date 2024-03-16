@@ -433,7 +433,7 @@ function calculateWaitTime(M, N, times) {
     let j = 0;
     for (let i = 0; i < M; i++) {
         serveCustomer(times[j]);
-        j++
+        j++;
     }
 
     // After serving all customers ahead, the soonest available agent will serve Julie
@@ -479,3 +479,226 @@ function timeToMeetAgent(agents, times, M) {
     let julieWaitTime = Math.min(...agentAvailability);
     return julieWaitTime;
 }
+
+////////////////////////////////////////////////////////////////////////////////////
+
+// At Pinterest, an effective way to increase user engagement is by sending emails with trending topics the user might be interested in.
+//Assume we are provided with an ML-based recommendation system generating personalized topics for each user.
+// In order to maximize the email open rate, we want to auto-generate a personalized subject line for each user based on a list of topics recommended for them.
+
+// PART 1
+// Write a function that takes in a list of Pin topics and returns a string representing the English-formatted conjunction of those topics.
+
+// For example, given these topics: [‘Animals’, ‘Baking’, ‘Cooking’, ‘Dogs’]
+// The output would be: “Animals, Baking, Cooking and Dogs”
+
+// PART 2:
+// Now let’s add a new argument called `limit`. This controls the maximum number of topics that should be displayed. Any remaining items are “summarized” using the string “and # more topics”.
+
+// For example, given these topics: [‘Animals’, ‘Baking’, ‘Cooking’, ‘Dogs’] and limit: 2
+// The output would be “Animals, Baking and 2 more topics”
+
+// PART 3
+// Now assume there is a maximum character length recommended for the email subject line.
+
+//Let’s replace `limit` with a new argument `max_chars`. This argument strictly limits the length of the output string to a maximum of `max_chars`.
+
+// Given a list `topics` and the maximum output length `max_chars`, write a function that returns a formatted string that contains as many topics as it can fit, and the remaining topics “summarized” using the string “and # more topics”.
+
+// For example, given these topics: [‘Animals’, ‘Baking’, ‘Cooking’, ‘Dogs’] and max_chars: 30
+// The output would be “Animals and 3 more topics”.
+
+// The candidate is allowed to use the solutions from Part 1 & 2 as helper functions.
+
+/*
+
+
+
+
+
+
+
+function (pins)
+ if empty return null or ""
+ no order or sorting FiFi
+ no extra formatting needed
+
+ max and min = infinite;
+
+create a new str variable
+
+loop thru pins using index or i
+  check if i is second to last
+    if it is concat "and" instead of ","
+      else
+    concat pin + ","
+
+
+return a newStr
+*/
+
+let pinTopics = (pins) => {
+    if (pins.length === 0) return "";
+    if (pins.length === 1) return pins[0];
+
+    let newStr = "";
+
+    // [‘Animals’, ‘Baking’, ‘Cooking’, ‘Dogs’]
+    // for(let i = 0; i < pins.length; i++){
+    //   if( i === pins.length - 2){
+    //     newStr += pins[i] + " and "
+    //   } else if (i === pins.length - 1){
+    //     newStr += pins[i];
+    //   } else {
+    //     newStr += pins[i] + ", ";
+    //   }
+    // }
+
+    for (let i = 0; i < pins.length - 2; i++) {
+        newStr += pins[i] + ", ";
+    }
+
+    newStr += pins[pins.length - 2] + " and " + pins[pins.length - 1];
+
+    return newStr;
+};
+
+// console.log(pinTopics(['Animals']));
+// console.log(pinTopics(['Animals', "Baking"]));
+// console.log(pinTopics(['Animals', 'Baking', 'Cooking', 'Dogs']));
+
+// PART 2:
+// Now let’s add a new argument called `limit`. This controls the maximum number of topics that should be displayed. Any remaining items are “summarized” using the string “and # more topics”.
+
+// For example, given these topics: [‘Animals’, ‘Baking’, ‘Cooking’, ‘Dogs’] and limit: 2
+// The output would be “Animals, Baking and 2 more topics”
+
+/*
+
+  2 base cases for empty or singular
+
+  initialize a newStr
+
+  do a check to see if limit is above the the lenght of pins
+    if limit is above call original function
+  else
+    loop thru till limit and find the difference
+      concat ` and ${difference} + "more topics"
+  */
+
+let pinLimit = (pins, limit) => {
+    if (pins.length === 0) return "";
+    if (pins.length === 1) return pins[0];
+
+    let newStr = "";
+
+    if (limit > pins.length) {
+        return pinTopics(pins);
+    } else {
+        for (let i = 0; i < limit - 1; i++) {
+            newStr += pins[i] + ", ";
+        }
+        const difference = pins.length - limit;
+
+        if (difference === 1) {
+            return (newStr += `${
+                pins[limit - 1]
+            } and ${difference} more topic`);
+        }
+
+        return (newStr += `${pins[limit - 1]} and ${difference} more topics`);
+    }
+};
+
+// console.log(pinTopics(['Animals']));
+// console.log(pinTopics(['Animals', "Baking"]));
+let topics = ["Animals", "Baking", "Cooking", "Dogs"];
+// console.log(pinLimit(topics, 2));
+
+// PART 3
+// Now assume there is a maximum character length recommended for the email subject line.
+
+//Let’s replace `limit` with a new argument `max_chars`. This argument strictly limits the length of the output string to a maximum of `max_chars`.
+
+// Given a list `topics` and the maximum output length `max_chars`, write a function that returns a formatted string that contains as many topics as it can fit, and the remaining topics “summarized” using the string “and # more topics”.
+
+// For example, given these topics: [‘Animals’, ‘Baking’, ‘Cooking’, ‘Dogs’] and max_chars: 30
+// The output would be “Animals and 3 more topics”.
+
+// The candidate is allowed to use the solutions from Part 1 & 2 as helper functions.
+
+/*
+   and 3 more topics === 18 count
+
+   return "" if max_chars === 0
+   return "" if max chars < pins[0]
+
+
+  add 5 to the last if using first
+  loop thru pins
+    minus pin length + 1 from max chars
+    if that reaches a count of 18
+      call second method with running count as limit
+
+  */
+
+var pinTopics = (pins) => {
+    if (pins.length === 0) return "";
+    if (pins.length === 1) return pins[0];
+
+    let newStr = "";
+
+    for (let i = 0; i < pins.length - 2; i++) {
+        newStr += pins[i] + ", ";
+    }
+
+    newStr += pins[pins.length - 2] + " and " + pins[pins.length - 1];
+
+    return newStr;
+};
+
+var pinLimit = (pins, limit) => {
+    if (pins.length === 0) return "";
+    if (pins.length === 1) return pins[0];
+
+    let newStr = "";
+
+    if (limit > pins.length) {
+        return pinTopics(pins);
+    } else {
+        for (let i = 0; i < limit - 1; i++) {
+            newStr += pins[i] + ", ";
+        }
+        const difference = pins.length - limit;
+
+        if (difference === 1) {
+            return (newStr += `${
+                pins[limit - 1]
+            } and ${difference} more topic`);
+        }
+
+        return (newStr += `${pins[limit - 1]} and ${difference} more topics`);
+    }
+};
+
+let pinCharLimit = (pins, max_chars) => {
+    if (max_chars === 0) return "";
+    if (max_chars > pins[0]) return "";
+
+    let count = 0;
+    let currLength = 0;
+    let realLimit = max_chars - 18;
+
+    for (let i = 0; i < pins.length; i++) {
+        let currPin = pins[i];
+        currLength += currPin.length;
+
+        if (currLength >= realLimit) {
+            return pinLimit(pins, i);
+        } else {
+            continue;
+        }
+    }
+};
+
+console.log(pinCharLimit(topics, 30));

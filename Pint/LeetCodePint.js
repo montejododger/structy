@@ -296,6 +296,34 @@ var reorganizeString = function (s) {
     return results.join("");
 };
 
+var reorganizeString = function (s) {
+    let count = {};
+
+    for (let char of s) {
+        count[char] = (count[char] || 0) + 1;
+    }
+
+    let sortedChars = Object.entries(count).sort((a, b) => b[1] - a[1]);
+
+    let i = 0;
+    let newStr = new Array(s.length);
+
+    // only need ot check the first time not every single time
+    if (sortedChars[0][1] > Math.floor(s.length + 1) / 2) return "";
+
+    for (let [char, freq] of sortedChars) {
+
+        // changed from a for loop to a while loop, which can feel simplier
+        while (freq > 0) {
+            if (i >= s.length) i = 1;
+            newStr[i] = char;
+            freq--;
+            i += 2;
+        }
+    }
+
+    return newStr.join("");
+};
 ////////////////////////////////////////////////////////
 
 //! Jump Game III 1306
@@ -388,7 +416,6 @@ var compress = function (chars) {
 };
 
 var compress = function (chars) {
-    
     let i = 0;
     let j = 0;
 

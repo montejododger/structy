@@ -464,6 +464,31 @@ var letterCombinations = function (digits) {
 
     return queue; // The queue now contains all possible combinations
 };
+
+var letterCombinations = function (digits) {
+    if (!digits) return [];
+    let combos = [""];
+
+    const digitsToLetters = {
+        2: "abc",
+        3: "def",
+        4: "ghi",
+        5: "jkl",
+        6: "mno",
+        7: "pqrs",
+        8: "tuv",
+        9: "wxyz",
+    };
+
+    for (let digit of digits) {
+        const possibleChars = digitsToLetters[digit];
+        combos = combos.flatMap((prefix) =>
+            possibleChars.split("").map((letter) => prefix + letter)
+        );
+    }
+
+    return combos;
+};
 ////////////////////////////////////////////////////////
 // Description
 // A subsequence of a string is a new string that is formed from the original string by deleting some (can be none) of the characters without disturbing the relative positions of the remaining characters. (i.e., "ace" is a subsequence of "abcde" while "aec" is not).

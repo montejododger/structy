@@ -702,3 +702,69 @@ let pinCharLimit = (pins, max_chars) => {
 };
 
 console.log(pinCharLimit(topics, 30));
+
+///////////////////////////////////////////////////////////////////////////////////////////
+
+function formatTopics(topics) {
+    if (topics.length === 0) return ""; // no topics
+    if (topics.length === 1) return topics[0]; // 1 topic
+    if (topics.length === 2) return topics.join(" and "); // 2 topics
+    return `${topics.slice(0, -1).join(", ")} and ${topics[topics.length - 1]}`; // 3+ topics
+}
+
+function formatTopicsWithLimit(topics, limit) {
+    if (topics.length <= limit) {
+        return formatTopics(topics);
+    } else {
+        const displayedTopics = topics.slice(0, limit);
+        const remainingCount = topics.length - limit;
+        return `${displayedTopics.join(
+            ", "
+        )} and ${remainingCount} more topics`;
+    }
+}
+
+function formatTopicsWithMaxChars(topics, max_chars) {
+    let formattedString = "";
+    let index = 0;
+    while (index < topics.length) {
+        let testString =
+            formattedString + (formattedString ? ", " : "") + topics[index];
+        let remainingCount = topics.length - (index + 1);
+        let additionalLength =
+            remainingCount > 0
+                ? `, and ${remainingCount} more topics`.length
+                : 0;
+
+        if (testString.length + additionalLength <= max_chars) {
+            formattedString = testString;
+        } else {
+            if (formattedString.length === 0) {
+                // Special case if the first topic is too long
+                formattedString =
+                    topics[index].substring(
+                        0,
+                        max_chars - additionalLength - 4
+                    ) + "...";
+                break;
+            } else {
+                formattedString += ` and ${remainingCount + 1} more topics`;
+                break;
+            }
+        }
+        index++;
+    }
+
+    // Adjusting the last comma to 'and' if no summarization was needed
+    if (!formattedString.includes("more topics")) {
+        let lastComma = formattedString.lastIndexOf(",");
+        if (lastComma !== -1) {
+            formattedString =
+                formattedString.substring(0, lastComma) +
+                " and" +
+                formattedString.substring(lastComma + 1);
+        }
+    }
+
+    return formattedString;
+}

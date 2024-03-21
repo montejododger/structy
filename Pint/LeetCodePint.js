@@ -117,6 +117,31 @@ var countAndSay = function (n) {
     return prev;
 };
 
+var countAndSay = function (n) {
+    if (n === 1) return "1";
+
+    let prev = "1";
+
+    for (let i = 1; i < n; i++) {
+        let j = 0;
+        let k = 0;
+        let newPrev = "";
+
+        while (k <= prev.length) {
+            if (prev[j] === prev[k]) {
+                k++;
+            } else {
+                const num = k - j;
+                newPrev += num + prev[j];
+                j = k;
+            }
+        }
+
+        prev = newPrev;
+    }
+
+    return prev;
+};
 ////////////////////////////////////////////////////////
 
 //! Minimize Result by Adding Parentheses to Expression 2232

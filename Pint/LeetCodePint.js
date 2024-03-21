@@ -386,6 +386,34 @@ var compress = function (chars) {
 
     return i;
 };
+
+var compress = function (chars) {
+    
+    let i = 0;
+    let j = 0;
+
+    while (j < chars.length) {
+        let currChar = chars[i];
+
+        while (currChar === chars[j]) {
+            j++;
+        }
+
+        const num = j - i;
+        chars[i] = currChar;
+        i++;
+
+        if (num > 1) {
+            const numStr = String(num);
+            for (let num of numStr) {
+                chars[i] = num;
+                i++;
+            }
+        }
+    }
+
+    return i;
+};
 ////////////////////////////////////////////////////////
 
 //! Meeting Rooms II 253

@@ -312,7 +312,6 @@ var reorganizeString = function (s) {
     if (sortedChars[0][1] > Math.floor(s.length + 1) / 2) return "";
 
     for (let [char, freq] of sortedChars) {
-
         // changed from a for loop to a while loop, which can feel simplier
         while (freq > 0) {
             if (i >= s.length) i = 1;
@@ -373,6 +372,30 @@ var canReach = function (arr, start) {
 
     //(canReach(arr, 5 + 1)       (canReach(arr, 5 - 1)
     return canReach(arr, plus) || canReach(arr, minus);
+};
+
+var canReach = function (arr, start) {
+    const queue = [start];
+
+    while (queue.length > 0) {
+        // console.log(`queue = ${queue}`);
+        // console.log(`arr = ${arr}`);
+        const curr = queue.shift();
+
+        if (arr[curr] === 0) return true;
+
+        const jumpDistance = arr[curr];
+        arr[curr] = -1;
+
+        const forward = curr + jumpDistance;
+        const backwards = curr - jumpDistance;
+
+        if (forward < arr.length && arr[forward] !== -1) queue.push(forward);
+
+        if (backwards >= 0 && arr[backwards] !== -1) queue.push(backwards);
+    }
+
+    return false;
 };
 ////////////////////////////////////////////////////////
 
@@ -610,7 +633,9 @@ var letterCombinations = function (digits) {
 // 1 <= source.length, target.length <= 1000
 // source and target consist of lowercase English letters.
 
-var shortestWay = function (source, target) {};
+var shortestWay = function (source, target) {
+    
+};
 
 ////////////////////////////////////////////////////////
 

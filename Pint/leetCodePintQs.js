@@ -13,18 +13,15 @@ var isSubsequence = function (s, t) {
     return i === s.length;
 };
 
-
-var isSubsequence = function(s, t) {
-
+var isSubsequence = function (s, t) {
     let i = 0;
-    for(let char of t){
-        if(i === s.length) return true;
-        if(char === s[i]) i++;
+    for (let char of t) {
+        if (i === s.length) return true;
+        if (char === s[i]) i++;
     }
 
     return i === s.length;
 };
-
 
 // MEDIUM
 
@@ -246,7 +243,8 @@ var letterCombinations = function (digits) {
 
     let queue = [""]; // Start with an empty string to build upon
 
-    for (let digit of digits) { // digits = "23"
+    for (let digit of digits) {
+        // digits = "23"
         let levelSize = queue.length; // Number of combinations to expand
         for (let i = 0; i < levelSize; i++) {
             let currentCombination = queue.shift(); // Take the first combination off the queue
@@ -262,22 +260,20 @@ var letterCombinations = function (digits) {
 
 //! HIGH LEVEL OVERVIEW
 
-
-var compress = function(chars) {
-
+var compress = function (chars) {
     // two pointers // sliding window ish
     let i = 0;
     let j = 0;
 
     // while loop to loop thru once
-    while (j < chars.length){
+    while (j < chars.length) {
         // init a variable for char and count
         let char = chars[j];
         let count = 0;
 
         // check if chars are the same
         // while loop to increment j while they are the same char, also increasing count
-        while(chars[j] === char){
+        while (chars[j] === char) {
             j++;
             count++;
         }
@@ -288,14 +284,13 @@ var compress = function(chars) {
 
         // check count if it more then 1
         // assign the value to the current index and increment
-        if(count > 1) {
-            const strCount = String(count)
-            for(let char of strCount){
+        if (count > 1) {
+            const strCount = String(count);
+            for (let char of strCount) {
                 chars[i] = char;
                 i++;
             }
         }
-
     }
 
     // return i, which is the total length of the new str
@@ -306,9 +301,7 @@ var compress = function(chars) {
 ///////////////////////////////////////////////////////////////////////
 //! UNIQUE PATHS II 63
 
-var uniquePathsWithObstacles = function(obstacleGrid) {
-
-};
+var uniquePathsWithObstacles = function (obstacleGrid) {};
 
 // DFS SEARCH
 //[[0,0,0],[0,1,0],[0,0,0]]
@@ -330,8 +323,6 @@ if 0 then proceed with incrementing to the right or left
 
 // Given two strings source and target, return the minimum number of subsequences of source such that their concatenation equals target. If the task is impossible, return -1.
 
-
-
 // Example 1:          i ->            j
 // Input: source = "abc", target = "abcbc"
 
@@ -350,37 +341,53 @@ if 0 then proceed with incrementing to the right or left
 
 // one point for source char and one point for targer char
 
-
 // create 2 point i and j
 // init count = 0
 // while loop until j gets to end  j < target.length
-    // increment count every for loop
-    // check value of source and target at i && j
-    // if they match incement both
-    // if not increment just i to check next char in source
-    // if target[j] is not found return -1
+// increment count every for loop
+// check value of source and target at i && j
+// if they match incement both
+// if not increment just i to check next char in source
+// if target[j] is not found return -1
 
- // return count
+// return count
 
- var shortestWay = function(source, target) {
+var shortestWay = function (source, target) {
     // t1s = "abc"
     // t1t = "abcbc"
 
     let j = 0;
     let count = 0;
 
-    while(j < target.length){ // j = 3   target length = 5
+    while (j < target.length) {
+        // j = 3   target length = 5
         count++; // count = 2
 
         let flag = false;
-        for(let i = 0; i < source.length; i++){ // 2
-            if(source[i] === target[j]) { // a = a abc = abc
+        for (let i = 0; i < source.length; i++) {
+            // 2
+            if (source[i] === target[j]) {
+                // a = a abc = abc
                 j++; // j = 5
                 flag = true;
             }
         }
 
-        if(!flag) return -1;
+        if (!flag) return -1;
+    }
+    return count;
+};
+
+var shortestWay = function (source, target) {
+    let j = 0,
+        count = 0;
+    while (j < target.length) {
+        let tempJ = j;
+        for (let i = 0; i < source.length; i++) {
+            if (j < target.length && source[i] === target[j]) j++;
+        }
+        if (tempJ === j) return -1; // No progress, character in target not found in source
+        count++;
     }
     return count;
 };
@@ -412,7 +419,6 @@ if 0 then proceed with incrementing to the right or left
 // Output: false
 // Explanation: There is no way to reach at index 1 with value 0.
 
-
 /*
 
 breath or depth
@@ -442,10 +448,10 @@ return (canReach(arr,minus) || canReach(arr,plus))
 // index 5 -> index 4 -> index 1 -> index 3
 // index 5 -> index 6 -> index 4 -> index 1 -> index 3
 
-var canReach = function(arr, start) { // arr = [4,2,3,0,3,1,2] start = 5
-    if(start < 0 || start >= arr.length || arr[start] === -1) return false;
-    if(arr[start] === 0) return true;
-
+var canReach = function (arr, start) {
+    // arr = [4,2,3,0,3,1,2] start = 5
+    if (start < 0 || start >= arr.length || arr[start] === -1) return false;
+    if (arr[start] === 0) return true;
 
     const plus = start + arr[start]; //  5 + 1, 6 + 2,
     const minus = start - arr[start]; // 5 - 1, 4 - 3,
@@ -458,5 +464,5 @@ var canReach = function(arr, start) { // arr = [4,2,3,0,3,1,2] start = 5
     //min (on minus path)
 
     //(canReach(arr, 5 + 1)       (canReach(arr, 5 - 1)
-    return (canReach(arr, plus) || canReach(arr, minus))
+    return canReach(arr, plus) || canReach(arr, minus);
 };

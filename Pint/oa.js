@@ -768,3 +768,226 @@ function formatTopicsWithMaxChars(topics, max_chars) {
 
     return formattedString;
 }
+
+//////////////////////////////////////////////
+//! FINAL ROUND
+
+/* list of pins
+  input 1:
+  id, height
+
+
+  example:
+  pins = [
+    {'id': 1, 'height':200},
+    {'id': 2, 'height':150},
+    {'id': 3, 'height':50},
+    {'id': 4, 'height':100}
+  ]
+
+  input 2: total number of columns that will fit the browser/mobile interface
+
+  number_columns = 2
+
+step 1:
+ _____
+|    |  1 = 200px
+| 1  |
+|    |
+|____|
+
+step 2:
+
+___________
+|    |    |  left = 200px, right = 0
+| 1  | 2  |  right = 150px
+|    |____|
+|____|
+
+step 3:
+___________
+|    |    |  left = 200px, right = 150px
+| 1  | 2  |  right = ??
+|    |____|
+|____|_3__|
+
+  visually:
+ _________
+|    |    |  1 = 200px
+| 1  | 2  |
+|    |____|
+|____|_3__|
+|    |
+|_4__|
+
+
+  pins = [
+    {'id': 1, 'height':200},
+    {'id': 2, 'height':150},
+    {'id': 3, 'height':50},
+    {'id': 4, 'height':100}
+  ]
+
+  [1, 2]
+  [4, 3]
+
+
+    expected outcome from the function
+  [
+    # This list has the pins for the first column
+      [ {'id': 1, 'height': 200}, {'id': 4, 'height': 100} ],
+
+    # This list has the pins for the second column
+      [ {'id': 2, 'height': 150}, {'id': 3, 'height': 50} ]
+  ]
+*/
+
+const format = (pins) => {
+    let left = [];
+    let right = [];
+
+    let leftHeight = 0;
+    let rightHeight = 0;
+
+    for (let i = 0; i < pins.length; i++) {
+        const currPinHeight = pins[i].height;
+
+        if (i === 0 || rightHeight === leftHeight || leftHeight < rightHeight) {
+            leftHeight += currPinHeight;
+            left.push(pins[i]);
+        } else {
+            rightHeight += currPinHeight;
+            right.push(pins[i]);
+        }
+    }
+
+    return [left, right];
+};
+
+const pins = [
+    { id: 1, height: 200 },
+    { id: 2, height: 150 },
+    { id: 3, height: 50 },
+    { id: 4, height: 100 },
+];
+
+console.log(format(pins));
+
+/*
+
+We are working on a project that requires us to print strings onto screens of various sizes. We want you to write a validator for this project. Given an arbitrary string, a font for that string, and the dimensions of the screen in pixels (width and height), you must write a function to determine whether or not the given string can fit on the screen without scrolling or zooming.
+*/
+
+// Let’s create a font interface that we can use to determine relevant display information about the string. The font interface should have two functions - getWidth and getHeight.
+
+// getWidth takes in a character and returns the width of that character in pixels (for example, in non-monospaced fonts, the character ‘w’ might be 20 pixels and the character ‘i’ might only be 10).
+
+// Fonts at Pinterest don’t have per-character height differences, so getHeight takes no arguments and returns the “line height”, or height of every single character in the font, in pixels.
+
+//implement class FONT
+
+// w = 20
+// i = 10
+
+var charKeys = {
+    a: 5,
+    b: 10,
+    c: 15,
+    i: 10,
+    w: 20,
+};
+
+const getWidth = (charMap, char) => {
+    return charMap[char];
+};
+
+const getHeight = (lineHeight) => {
+    return lineHeight;
+};
+
+// getWidth(charKeys, "i");
+// getHeight(10);
+
+// Now that we have our font interface, let’s use it to create our validation function. Write a function that takes a string, a font, and a screen size in pixels (width and height) and returns true if the string can fit on the screen and false otherwise. For simplicity, you can create a monospaced font and use that in your test cases (i.e., where width is constant - say 10), but your solution should be able to handle non-monospaced fonts. You can also assume that the line height of any of the fonts we use in our test cases is 10 pixels.
+
+// Example:
+// [ text=’abc’ | width=100 | height=100 | font=Font(10) ] -> True
+// [ text=’abc’ | width=1 | height=1 | font=Font(10) ] -> False
+
+//  ----
+// |exam| = true
+// |ple |
+//  -----
+
+const validate = (str, width, height, charKeys, lineHeight) => {
+    // screen size is width x height
+
+    let lineWidth = 0;
+    let currlineHeight;
+    const lineCount = Math.floor(height / lineHeight);
+    const totalwidth = width * lineCount;
+
+    for (let i = 0; i < str.length; i++) {
+        const char = str[i];
+
+        lineWidth += getWidth(charKeys, char);
+        currlineHeight = getHeight(lineHeight);
+    }
+
+    return lineWidth <= totalwidth && currlineHeight <= height;
+};
+
+console.log(validate("abc", 15, 10, charKeys, 10)); //abc = 30
+// console.log(validate('abc', 1, 1, charKeys, 10));
+
+//! HOW IT WAS SUPPOSE TO BE DONE
+
+
+
+
+class Font {
+    constructor(charWidths, lineHeight) {
+        this.charWidths = charWidths;
+        this.lineHeight = lineHeight;
+    }
+
+    getWidth(char) {
+        return this.charWidths[char] || this.charWidths.default;
+    }
+
+    getHeight() {
+        return this.lineHeight;
+    }
+}
+
+// Example usage with different fonts
+const font1 = new Font({ w: 20, i: 10, default: 15 }, 18); // Default width for unlisted chars
+const font2 = new Font({ a: 14, b: 16, default: 12 }, 20);
+
+// You'd then pass these font instances to your ScreenValidator as before.
+class ScreenValidator {
+    constructor(width, height, font) {
+        this.screenWidth = width;
+        this.screenHeight = height;
+        this.font = font;
+    }
+
+    canFitString(str) {
+        let currentWidth = 0;
+        let currentHeight = this.font.getHeight();
+
+        for (let char of str) {
+            let charWidth = this.font.getWidth(char);
+            if (charWidth + currentWidth > this.screenWidth) {
+                currentHeight += this.font.getHeight(); // Move to next line
+                currentWidth = charWidth; // Start new line with current char
+            } else {
+                currentWidth += charWidth;
+            }
+
+            if (currentHeight > this.screenHeight) return false;
+        }
+
+        return true;
+    }
+}

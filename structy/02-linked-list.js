@@ -55,18 +55,18 @@ var linkedListValues = (head) => {
 
 // recurssive
 
-var linkedListValues = (head) =>{
+var linkedListValues = (head) => {
     const values = [];
 
     fillValues(head, values);
     return values;
-}
+};
 
 var fillValues = (head, values) => {
-    if(head === null) return;
+    if (head === null) return;
     values.push(head.val);
     fillValues(head.next, values);
-}
+};
 
 // ############################################################################################################################################
 
@@ -472,7 +472,7 @@ zipperLists(one, w);
     return head1 because thats where we started
 */
 
-const zipperLists = (head1, head2) => {
+var zipperLists = (head1, head2) => {
     let tail = head1;
     let current1 = head1.next;
     let current2 = head2;
@@ -499,20 +499,20 @@ const zipperLists = (head1, head2) => {
 
 // recursively
 
-// const zipperLists = (head1, head2) => {
-//     // Base Cases
-//     if (head1 === null && head2 === null) return null;
-//     if (head1 === null) return head2;
-//     if (head2 === null) return head1;
+var zipperLists = (head1, head2) => {
+    // Base Cases
+    if (head1 === null && head2 === null) return null;
+    if (head1 === null) return head2;
+    if (head2 === null) return head1;
 
-//     const next1 = head1.next;
-//     const next2 = head2.next;
-//     head1.next = head2;
+    const next1 = head1.next;
+    const next2 = head2.next;
+    head1.next = head2;
 
-//     head2.next = zipperLists(next1, next2);
+    head2.next = zipperLists(next1, next2);
 
-//     return head1;
-// };
+    return head1;
+};
 
 // ############################################################################################################################################
 
@@ -582,10 +582,24 @@ mergeLists(h, p);
 */
 
 /*  GAME PLAN
+    create a dummy node
 
+    create a tail
+    create curr's for both heads
+
+    while both currs are valid
+        check the value of each curr
+        point tails next to the lowest
+        move corresonding curr to its next
+
+        move tail to its next
+
+    add any left over node to the tail
+
+    return the dummys next
 */
 
-const mergeLists = (head1, head2) => {
+var mergeLists = (head1, head2) => {
     let dummyHead = new Node(null);
 
     let tail = dummyHead;
@@ -611,21 +625,22 @@ const mergeLists = (head1, head2) => {
 };
 
 // RECURSIVELY
-// const mergeLists = (head1, head2) => {
-//     if (head1 === null && head2 === null) return null;
-//     if (head1 === null) return head2;
-//     if (head2 === null) return head1;
 
-//     if (head1.val < head2.val) {
-//         const next1 = head1.next;
-//         head1.next = mergeLists(next1, head2);
-//         return head1;
-//     } else {
-//         const next2 = head2.next;
-//         head2.next = mergeLists(head1, next2);
-//         return head1;
-//     }
-// };
+var mergeLists = (head1, head2) => {
+    if (head1 === null && head2 === null) return null;
+    if (head1 === null) return head2;
+    if (head2 === null) return head1;
+
+    if (head1.val < head2.val) {
+        const next1 = head1.next;
+        head1.next = mergeLists(next1, head2);
+        return head1;
+    } else {
+        const next2 = head2.next;
+        head2.next = mergeLists(head1, next2);
+        return head1;
+    }
+};
 
 //  N   ->  a   ->    b   ->   c   ->   d
 //  prev    curr      next
@@ -1222,7 +1237,8 @@ addLists(a1, b1);
 
 */
 
-const addLists = (head1, head2) => {asdflkjh
+const addLists = (head1, head2) => {
+    asdflkjh;
 
     const dummyHead = new Node(null);
     let tail = dummyHead;
@@ -1239,8 +1255,8 @@ const addLists = (head1, head2) => {asdflkjh
 
         const digit = sum % 10;
 
-        if (curr1 !== null) curr1 = curr1.next
-        if (curr2 !== null) curr2 = curr2.next
+        if (curr1 !== null) curr1 = curr1.next;
+        if (curr2 !== null) curr2 = curr2.next;
 
         tail.next = new Node(digit);
         tail = tail.next;
@@ -1270,6 +1286,5 @@ const addLists = (head1, head2, carry = 0) => {
 
     return resultNode;
 };
-
 
 // ############################################################################################################################################

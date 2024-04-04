@@ -736,7 +736,7 @@ isUnivalueList(u); // false
 
 */
 
-const isUnivalueList = (head) => {
+var isUnivalueList = (head) => {
     let current = head;
 
     while (current !== null && current.next !== null) {
@@ -752,10 +752,10 @@ const isUnivalueList = (head) => {
 
 // RECURSIVELY
 
-const isUnivalueList = (head, prevVal = null) => {
+var isUnivalueList = (head, prevVal = null) => {
     if (head === null) return true;
 
-    if (prevVal == null || prevVal === head.val) {
+    if (prevVal === null || prevVal === head.val) {
         return isUnivalueList(head.next, head.val);
     } else {
         return false;
@@ -844,25 +844,24 @@ longestStreak(null); // 0
 
 /*  GAME PLAN
 
-    cover edgecase if head is falsey, return 0;
 
-    current streak variable
-    longest streak variable
+    catch edge case of null
 
-    current node
-    next node
+    create a curr
+    create 2 trackers for current streak and longest streak
 
-    while loop (till next === null)
+    while curr.next is valid
+        check the val of curr and next
+        increment strek
+            else
+            adjust long streak if needed
+            reset streak
 
-    check if current and next are same value
-    increment
-    else
-    set longest to current or higher
-    reset current
+        move curr to next
 
-    move current and next to the next node
+    double check the long vs the curr streak
 
-    return longest streak
+    return long streak
 
 */
 

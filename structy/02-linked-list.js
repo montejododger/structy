@@ -336,8 +336,14 @@ reverseList(p); // p
 
 /*  GAME PLAN
     create a null node
-    move the null nodes next to current until the end
+    create a curr starting @head
+    while curr isValid
+        create a temp node of currs next(so we dont lose the pointer)
+        move currs next node ot point to prev
+        prev will become curr
+        move curr to next
 
+    return prev
 
 */
 
@@ -449,6 +455,21 @@ zipperLists(one, w);
 
 /*  GAME PLAN
 
+    create a tail from first head
+    create a next for both heads
+    create a flag to keep track of which list your on
+
+    while both curr's are valid
+        check flag to disinguish which list to take from
+        point tail to corresponding next from currs
+
+        move tail to next
+        reset flag to opposite
+
+    incase list are uneven then you would add the remaining
+    try adding both becuase you wont know which list has more;
+
+    return head1 because thats where we started
 */
 
 const zipperLists = (head1, head2) => {

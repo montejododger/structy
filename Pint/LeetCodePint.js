@@ -633,9 +633,7 @@ var letterCombinations = function (digits) {
 // 1 <= source.length, target.length <= 1000
 // source and target consist of lowercase English letters.
 
-var shortestWay = function (source, target) {
-    
-};
+var shortestWay = function (source, target) {};
 
 ////////////////////////////////////////////////////////
 

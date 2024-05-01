@@ -547,7 +547,7 @@ const avg = level => {
 
 */
 
-const leafList = root => {
+var leafList = root => {
     if (root === null) return [];
     const leaves = [];
     const stack = [root];
@@ -560,4 +560,22 @@ const leafList = root => {
         if (current.left !== null) stack.push(current.left);
     }
     return leaves;
+};
+
+// RECURSIVE
+
+var leafList = root => {
+    const leafs = [];
+    fillLeafs(root, leafs);
+
+    return leafs;
+};
+
+const fillLeafs = (root, leafs) => {
+    if (!root) return [];
+
+    if (!root.left && !root.right) leafs.push(root.val);
+
+    fillLeafs(root.left, leafs);
+    fillLeafs(root.right, leafs);
 };

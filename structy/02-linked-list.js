@@ -1119,7 +1119,7 @@ createLinkedList([]);
 
 */
 
-const createLinkedList = (values) => {
+var createLinkedList = (values) => {
     let dummyhead = new Node(null);
     let tail = dummyhead;
 
@@ -1129,6 +1129,25 @@ const createLinkedList = (values) => {
     }
 
     return dummyhead.next;
+};
+
+var createLinkedList = (values) => {
+    if(values.length === 0) return null;
+
+    let dummy = new Node(null);
+    let curr = dummy;
+
+
+    let i = 0;
+
+    while(i < values.length){
+        curr.next = new Node(values[i]);
+        curr = curr.next
+
+        i++;
+    }
+
+    return dummy.next;
 };
 // ############################################################################################################################################
 

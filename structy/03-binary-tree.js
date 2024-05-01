@@ -22,7 +22,7 @@
 
 // ITERIVE
 
-let depthFirstValues = (root) => {
+var depthFirstValues = (root) => {
     if (root === null) return [];
 
     const values = [];
@@ -56,7 +56,7 @@ d   e     f
 
 // RECURSIVELY
 
-let depthFirstValues = (root) => {
+var depthFirstValues = (root) => {
     if (!root) return [];
     const left = depthFirstValues(root.left);
     const right = depthFirstValues(root.right);
@@ -75,7 +75,7 @@ let depthFirstValues = (root) => {
 */
 
 // ITERATIVE
-const breadthFirstValues = (root) => {
+var breadthFirstValues = (root) => {
     const values = [];
     const queue = [root];
 
@@ -120,7 +120,7 @@ d   e     f
 
 // iterive
 
-const treeSum = (root) => {
+var treeSum = (root) => {
     if (!root) return 0;
 
     let sum = 0;
@@ -141,7 +141,7 @@ const treeSum = (root) => {
 
 // recursive
 
-const treeSum = (root) => {
+var treeSum = (root) => {
     if (!root) return 0;
 
     return root.val + treeSum(root.left) + treeSum(root.right);
@@ -156,7 +156,7 @@ const treeSum = (root) => {
 
 */
 
-const treeIncludes = (root, target) => {
+var treeIncludes = (root, target) => {
     if (!root) return false;
 
     const queue = [root];
@@ -172,7 +172,7 @@ const treeIncludes = (root, target) => {
     return false;
 };
 
-const treeIncludes = (root, target) => {
+var treeIncludes = (root, target) => {
     if (!root) return false;
     if (root.val === target) return true;
 
@@ -201,7 +201,7 @@ After loop return min
 while loop
 */
 
-const treeMinValue = (root) => {
+var treeMinValue = (root) => {
     const queue = [root];
     let min = root.val;
 
@@ -218,7 +218,7 @@ const treeMinValue = (root) => {
 
 // recursive
 
-const treeMinValue = (root) => {
+var treeMinValue = (root) => {
     if (!root) return null;
 
     let min = root.val;
@@ -240,7 +240,7 @@ base case
     return root.val
 */
 
-const maxPathSum = (root) => {
+var maxPathSum = (root) => {
     if (!root) return -Infinity;
     if (!root.left && !root.right) return root.val;
 
@@ -273,7 +273,7 @@ const maxPathSum = (root) => {
 //     if (result) return result.reverse();
 // };
 
-const pathFinder = (root, target) => {
+var pathFinder = (root, target) => {
     if (!root) return null;
     if (root.val === target) return [root.val];
 
@@ -302,7 +302,7 @@ const pathFinder = (root, target) => {
 
 */
 
-const treeValueCount = (root, target) => {
+var treeValueCount = (root, target) => {
     if (!root) return 0;
 
     const match = root.val === target ? 1 : 0;
@@ -323,7 +323,7 @@ const treeValueCount = (root, target) => {
 
 */
 
-const howHigh = (node) => {
+var howHigh = (node) => {
     if (!node) return -1;
 
     const left = howHigh(node.left);
@@ -351,7 +351,7 @@ const howHigh = (node) => {
     return the last value
 */
 
-const bottomRightValue = (root) => {
+var bottomRightValue = (root) => {
     const values = [];
     const queue = [root];
 
@@ -368,17 +368,19 @@ const bottomRightValue = (root) => {
 // ############################################################################################################################################
 
 /* TESTS
-
 */
 
 /*  GAME PLAN
-
-    recursive
-
-
 */
 
-const allTreePaths = (root) => {
+//      a
+//    /   \
+//   b     c
+//  / \     \
+// d   e     f
+
+// recursive
+var allTreePaths = (root) => {
     // if node is null return out
     if (!root) return [];
     // if node has no left or right return the root val
@@ -389,6 +391,10 @@ const allTreePaths = (root) => {
 
     // progress down the left part of the tree
     const left = allTreePaths(root.left);
+    //  [
+    //    [b, d],
+    //    [b, e]
+    //  ]
 
     // iterate thru all the paths returned and add the root in front
     // push into paths collection
@@ -398,6 +404,10 @@ const allTreePaths = (root) => {
 
     // same as left
     const right = allTreePaths(root.right);
+    //  [
+    // [c, f]
+    //  ]
+
     for (const path in right) {
         paths.push(root.val, ...path);
     }
@@ -417,7 +427,7 @@ const allTreePaths = (root) => {
 */
 // Depth First
 
-const treeLevels = (root) => {
+var treeLevels = (root) => {
 
     // edge case
     if (!root) return [];
@@ -444,7 +454,7 @@ const treeLevels = (root) => {
 };
 
 // BFS
-const treeLevels = (root) => {
+var treeLevels = (root) => {
     if (root === null) return [];
 
     const levels = [];
@@ -464,6 +474,22 @@ const treeLevels = (root) => {
 
     return levels;
 };
+
+let tree_levels = (root) => {
+    const levels = []
+    _treeLevels(root, levels, levelNum)
+
+    return levels
+}
+
+let _treeLevels = (root, levels, levelNum) => {
+    if (!root) return [];
+
+    levels.length === levelNum ?  levels[levelNum] = [root.val] : levels[levelNum].push(root.val)
+
+    _treeLevels(root.left, levels, levelNum + 1)
+    _treeLevels(root.right, levels, levelNum + 1)
+}
 
 // ############################################################################################################################################
 
